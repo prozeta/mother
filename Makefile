@@ -17,15 +17,17 @@ maestro := /usr/local/bin/maestro
 named := /usr/sbin/named
 dhcpd := /usr/sbin/dhcpd
 nsupdate := /usr/bin/nsupdate
+user := $(shell whoami)
 
-all: test_uid prepare pip docker docker_dir docker_compose docker_registry maestro dns
-.PHONY: test_uid prepare pip docker docker_dir docker_compose docker_registry maestro dns
+ifneq (${user},root)
+$(error You are not root!)
+endif
 
-test_uid:
-	test `id -u` == 0 || $(error You are not root)
+all: prepare pip docker docker_dir docker_compose docker_registry maestro dns
+.PHONY: prepare pip docker docker_dir docker_compose docker_registry maestro dns
 
 prepare: ${prepared}
-${prepared}: test_uid
+${prepared}:
 	${log} Upgrading system
 	${apt_get} update
 	${apt_get} dist-upgrade
@@ -44,15 +46,15 @@ ${pip}: ${prepared}
 docker: ${docker}
 ${docker}: ${prepared}
 	${log} Installing Docker
-	wget -qO- https://get.docker.com/ | sh;
+	test -f ${docker} || ( wget -qO- https://get.docker.com/ | sh )
 	${log} Stopping Docker
 	stop docker || true
 	/etc/init.d/docker stop || true
 	${log} Removing Docker bridge \& iptables rules
-	ip l s dev docker0 down
-	brctl delbr docker0
-	iptables-save -t nat | grep -i \\-A | grep -i docker | sed s/-A/-D/ | xargs -t -L1 iptables -t nat
-	iptables-save -t filter | grep -i \\-A | grep -i docker | sed s/-A/-D/ | xargs -t -L1 iptables -t filter
+	ip l s dev docker0 down || true
+	brctl delbr docker0 || true
+	( iptables-save -t nat | grep -i \\-A | grep -i docker | sed s/-A/-D/ | xargs -t -L1 iptables -t nat ) || true
+	( iptables-save -t filter | grep -i \\-A | grep -i docker | sed s/-A/-D/ | xargs -t -L1 iptables -t filter ) || true
 	${log} Configuring Docker
 	echo "DOCKER_OPTS=\"--bip ${docker_br_ip} --dns ${docker_dns}\"" > /etc/default/docker
 	touch ${docker}
@@ -71,16 +73,20 @@ ${docker_compose}: ${docker}
 
 docker_registry: ${docker_registry}
 ${docker_registry}: ${docker} ${docker_dir} ${docker_compose}
-	mkdir -p /tmp/build/docker_registry & cd /tmp/build/docker_registry
+	mkdir -p /tmp/build/docker_registry
+	cd /tmp/build/docker_registry
 	rm -f Dockerfile
 	echo "FROM registry:2.0" >> Dockerfile
 	echo "RUN mkdir /data" >> Dockerfile
 	echo "ENV REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY /data" >> Dockerfile
 	echo "ENV REGISTRY_LOG_LEVEL debug" >> Dockerfile
-	echo "EXPOSE 5000"" >> Dockerfile
+	echo "EXPOSE 5000" >> Dockerfile
 	docker build --rm -t "base/docker-registry:latest" .
+	docker stop docker-registry || true
+	docker rm docker-registry || true
 	docker create --name=docker-registry --publish=5000:5000 --volume=${docker_registry}:/data docker-registry
-	# TODO
+	mkdir -p ${docker_registry}
+	docker start docker-registry
 
 maestro: ${maestro}
 ${maestro}: ${prepared} ${docker} ${pip}
