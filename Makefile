@@ -24,8 +24,8 @@ all: test_uid prepare pip docker docker_dir docker_compose docker_registry maest
 test_uid:
 	test `id -u` == 0 || $(error You are not root)
 
-prepare: test_uid ${prepared}
-${prepared}:
+prepare: ${prepared}
+${prepared}: test_uid
 	${log} Upgrading system
 	${apt_get} update
 	${apt_get} dist-upgrade
@@ -34,39 +34,43 @@ ${prepared}:
 	touch ${prepared}
 
 pip: ${prepared} ${pip}
-${pip}:
+${pip}: ${prepared}
 	${log} Installing pip
 	wget https://raw.github.com/pypa/pip/master/contrib/get-pip.py -O/tmp/get-pip.py
 	python /tmp/get-pip.py
 	rm -f /tmp/get-pip.py
 	touch ${pip}
 
-docker: ${prepared} ${docker}
-${docker}:
+docker: ${docker}
+${docker}: ${prepared}
 	${log} Installing Docker
 	wget -qO- https://get.docker.com/ | sh;
 	${log} Stopping Docker
 	stop docker || true
+	/etc/init.d/docker stop || true
 	${log} Removing Docker bridge \& iptables rules
 	ip l s dev docker0 down
 	brctl delbr docker0
 	iptables-save -t nat | grep -i \\-A | grep -i docker | sed s/-A/-D/ | xargs -t -L1 iptables -t nat
 	iptables-save -t filter | grep -i \\-A | grep -i docker | sed s/-A/-D/ | xargs -t -L1 iptables -t filter
+	${log} Configuring Docker
 	echo "DOCKER_OPTS=\"--bip ${docker_br_ip} --dns ${docker_dns}\"" > /etc/default/docker
 	touch ${docker}
+	${log} Starting Docker
 	start docker
 
-docker_dir: ${docker} ${docker_dir}
-${docker_dir}:
+docker_dir: ${docker_dir}
+${docker_dir}: ${docker}
 	mkdir -p ${docker_dir}
 
-docker_compose: ${docker} ${docker_dir} ${docker_compose}
-${docker_compose}:
+
+docker_compose: ${docker_compose}
+${docker_compose}: ${docker}
 	curl -L https://github.com/docker/compose/releases/download/1.2.0/docker-compose-`uname -s`-`uname -m` > ${docker_compose}
 	chmod +x ${docker_compose}
 
-docker_registry: ${docker} ${docker_dir} ${docker_compose} ${docker_registry}
-${docker_registry}:
+docker_registry: ${docker_registry}
+${docker_registry}: ${docker} ${docker_dir} ${docker_compose}
 	mkdir -p /tmp/build/docker_registry & cd /tmp/build/docker_registry
 	rm -f Dockerfile
 	echo "FROM registry:2.0" >> Dockerfile
@@ -76,16 +80,16 @@ ${docker_registry}:
 	echo "EXPOSE 5000"" >> Dockerfile
 	docker build --rm -t "base/docker-registry:latest" .
 	docker create --name=docker-registry --publish=5000:5000 --volume=${docker_registry}:/data docker-registry
+	# TODO
 
-
-maestro: ${prepared} ${docker} ${pip} ${maestro}
-${maestro}:
+maestro: ${maestro}
+${maestro}: ${prepared} ${docker} ${pip}
 	${log} Installing Maestro NG
 	${pip} install --upgrade git+git://github.com/signalfuse/maestro-ng
 	touch ${maestro}
 
-dns: ${named} ${nsupdate} ${dns_key}
-${named}:
+dns: ${named}
+${named}: ${nsupdate} ${dns_key}
 	${apt_get} install bind9 bind9utils
 	/etc/init.d/bind9 stop
 	touch ${named}
