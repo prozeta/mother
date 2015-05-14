@@ -30,7 +30,7 @@ nginx: ${nginx}
 postgres: ${postgres}
 docker: ${docker} ${docker_dir} ${docker_compose}
 docker_registry: ${docker_registry}
-docker_images: ${puppetmaster} ${puppetdb} ${foreman}
+docker_images: ${build_puppetmaster} ${build_puppetdb} ${build_foreman}
 maestro: ${pip} ${maestro}
 dns: ${named}
 dhcp: ${dhcpd}
