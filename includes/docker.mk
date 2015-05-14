@@ -1,6 +1,6 @@
 ${docker}:
 	$(info Installing Docker)
-	test -f ${docker} || ( wget -qO- https://get.docker.com/ | sh )
+	test -f ${docker} || ( wget -qO- https://get.docker.com/ | sh ) >/dev/null
 	$(info Stopping Docker)
 	stop docker || true
 	/etc/init.d/docker stop || true

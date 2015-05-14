@@ -2,7 +2,7 @@ ifneq ($(shell whoami),root)
 $(error You are not root!)
 endif
 
-apt_get := DEBIAN_FRONTEND=noninteractive apt-get -y
+apt_get := DEBIAN_FRONTEND=noninteractive apt-get -qqy
 
 include config.mk
 include includes/targets.mk
