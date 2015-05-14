@@ -17,100 +17,36 @@ maestro := /usr/local/bin/maestro
 named := /usr/sbin/named
 dhcpd := /usr/sbin/dhcpd
 nsupdate := /usr/bin/nsupdate
+nginx := /usr/sbin/nginx
 user := $(shell whoami)
 
+# bail out if not root
 ifneq (${user},root)
 $(error You are not root!)
 endif
 
-all: prepare pip docker docker_dir docker_compose docker_registry maestro dns
-.PHONY: prepare pip docker docker_dir docker_compose docker_registry maestro dns
+all: prepare docker docker_registry maestro
+.PHONY: prepare docker docker_registry maestro
 
 prepare: ${prepared}
-${prepared}:
-	${log} Upgrading system
-	${apt_get} update
-	${apt_get} dist-upgrade
-	${log} Installing base tools
-	${apt_get} install wget python-software-properties python-dev python-yaml ruby git
-	touch ${prepared}
-
-pip: ${prepared} ${pip}
-${pip}: ${prepared}
-	${log} Installing pip
-	wget https://raw.github.com/pypa/pip/master/contrib/get-pip.py -O/tmp/get-pip.py
-	python /tmp/get-pip.py
-	rm -f /tmp/get-pip.py
-	touch ${pip}
-
-docker: ${docker}
-${docker}: ${prepared}
-	${log} Installing Docker
-	test -f ${docker} || ( wget -qO- https://get.docker.com/ | sh )
-	${log} Stopping Docker
-	stop docker || true
-	/etc/init.d/docker stop || true
-	${log} Removing Docker bridge \& iptables rules
-	ip l s dev docker0 down || true
-	brctl delbr docker0 || true
-	( iptables-save -t nat | grep -i \\-A | grep -i docker | sed s/-A/-D/ | xargs -t -L1 iptables -t nat ) || true
-	( iptables-save -t filter | grep -i \\-A | grep -i docker | sed s/-A/-D/ | xargs -t -L1 iptables -t filter ) || true
-	${log} Configuring Docker
-	echo "DOCKER_OPTS=\"--bip ${docker_br_ip} --dns ${docker_dns}\"" > /etc/default/docker
-	touch ${docker}
-	${log} Starting Docker
-	start docker
-
-docker_dir: ${docker_dir}
-${docker_dir}: ${docker}
-	mkdir -p ${docker_dir}
-
-
-docker_compose: ${docker_compose}
-${docker_compose}: ${docker}
-	curl -L https://github.com/docker/compose/releases/download/1.2.0/docker-compose-`uname -s`-`uname -m` > ${docker_compose}
-	chmod +x ${docker_compose}
-
+docker: ${docker} ${docker_dir} ${docker_compose}
 docker_registry: ${docker_registry}
-${docker_registry}: ${docker} ${docker_dir} ${docker_compose}
-	mkdir -p /tmp/build/docker_registry
-	cd /tmp/build/docker_registry
-	rm -f Dockerfile
-	echo "FROM registry:2.0" >> Dockerfile
-	echo "RUN mkdir /data" >> Dockerfile
-	echo "ENV REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY /data" >> Dockerfile
-	echo "ENV REGISTRY_LOG_LEVEL debug" >> Dockerfile
-	echo "EXPOSE 5000" >> Dockerfile
-	docker build --rm -t "base/docker-registry:latest" .
-	docker stop docker-registry || true
-	docker rm docker-registry || true
-	docker create --name=docker-registry --publish=5000:5000 --volume=${docker_registry}:/data docker-registry
-	mkdir -p ${docker_registry}
-	docker start docker-registry
-
-maestro: ${maestro}
-${maestro}: ${prepared} ${docker} ${pip}
-	${log} Installing Maestro NG
-	${pip} install --upgrade git+git://github.com/signalfuse/maestro-ng
-	touch ${maestro}
-
+maestro: ${pip} ${maestro}
+nginx: ${nginx}
 dns: ${named}
-${named}: ${nsupdate} ${dns_key}
-	${apt_get} install bind9 bind9utils
-	/etc/init.d/bind9 stop
-	touch ${named}
+dhcp: ${dhcpd}
+# foreman_proxy:
 
-${nsupdate}:
-	test -f ${nsupdate} || ( ${apt_get} install dnsutils; touch ${nsupdate} )
+include prepare.mk
+include nginx.mk
+include foreman_proxy.mk
+include dns.mk
+include dhcp.mk
+include docker.mk
+include docker_registry.mk
+include maestro.mk
 
-${dns_key}:
-	test -f ${dns_key} || ( ddns-confgen -k foreman -a hmac-md5 | egrep -v '^#' > ${dns_key} )
 
-dhcpd:
-${dhcpd}:
-	test -f ${dhcpd} || ( ${apt_get} install isc-dhcp-server && touch ${dhcpd) )
 
-foreman_proxy:
 
-certs:
 
