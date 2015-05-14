@@ -7,7 +7,7 @@ ${docker_registry}: ${docker} ${docker_dir} ${docker_compose}
 	echo "ENV REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY /data" >> Dockerfile
 	echo "ENV REGISTRY_LOG_LEVEL debug" >> Dockerfile
 	echo "EXPOSE 5000" >> Dockerfile
-	docker build --rm -t "base/docker-registry:latest" .
+	docker build -q --rm -t "base/docker-registry:latest" .
 	docker stop docker-registry || true
 	docker rm docker-registry || true
 	docker create --name=docker-registry --publish=5000:5000 --volume=${docker_registry}:/data 'base/docker-registry'
