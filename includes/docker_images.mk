@@ -1,21 +1,21 @@
-${build_puppetmaster}: ${buildpath}
-	rm -rf ${buildpath}/puppetmaster
-	git clone https://github.com/prozeta/mother-puppetmaster.git ${buildpath}/puppetmaster
-	cd ${buildpath}/puppetmaster
+${build_puppetmaster}: ${docker_buildpath}
+	rm -rf ${docker_buildpath}/puppetmaster
+	git clone https://github.com/prozeta/mother-puppetmaster.git ${docker_buildpath}/puppetmaster
+	cd ${docker_buildpath}/puppetmaster
 	docker build --rm -t "mother/puppetmaster:latest" .
 	docker export -o ${build_puppetmaster} "mother/puppetmaster:latest"
 
-# ${build_puppetdb}: ${buildpath}
-# 	rm -rf ${buildpath}/puppetdb
-# 	git clone https://github.com/prozeta/mother-puppetdb.git ${buildpath}/puppetdb
-# 	cd ${buildpath}/puppetdb
+# ${build_puppetdb}: ${docker_buildpath}
+# 	rm -rf ${docker_buildpath}/puppetdb
+# 	git clone https://github.com/prozeta/mother-puppetdb.git ${docker_buildpath}/puppetdb
+# 	cd ${docker_buildpath}/puppetdb
 # 	docker build --rm -t "mother/puppetdb:latest" .
 # 	docker export -o ${build_puppetdb} "mother/puppetdb:latest"
 
-${build_foreman}: ${buildpath}
-	rm -rf ${buildpath}/foreman
-	git clone https://github.com/prozeta/mother-foreman.git ${buildpath}/foreman
-	cd ${buildpath}/foreman
+${build_foreman}: ${docker_buildpath}
+	rm -rf ${docker_buildpath}/foreman
+	git clone https://github.com/prozeta/mother-foreman.git ${docker_buildpath}/foreman
+	cd ${docker_buildpath}/foreman
 	docker build --rm -t "mother/foreman:latest" .
 	docker export -o ${build_foreman} "mother/foreman:latest"
 

@@ -1,6 +1,6 @@
 ${docker_registry}: ${docker} ${docker_dir} ${docker_compose}
-	mkdir -p /tmp/build/docker_registry
-	cd /tmp/build/docker_registry
+	mkdir -p ${docker_buildpath}/docker_registry
+	cd ${docker_buildpath}/docker_registry
 	rm -f Dockerfile
 	echo "FROM registry:2.0" >> Dockerfile
 	echo "RUN mkdir /data" >> Dockerfile
