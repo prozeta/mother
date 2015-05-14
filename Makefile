@@ -14,4 +14,5 @@ include includes/dns.mk
 include includes/dhcp.mk
 include includes/docker.mk
 include includes/docker_registry.mk
+include includes/docker_images.mk
 include includes/maestro.mk
