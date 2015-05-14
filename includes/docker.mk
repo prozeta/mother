@@ -17,8 +17,9 @@ ifeq ($(wildcard ${docker}),)
 	start docker
 endif
 
-${docker_dir}: ${docker}
+${docker_dir}, ${docker_dir}/images: ${docker}
 	mkdir -p ${docker_dir}
+	mkdir -p ${docker_dir}/images
 
 ${docker_buildpath}: ${docker}
 	mkdir -p ${docker_buildpath}
