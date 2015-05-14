@@ -10,6 +10,6 @@ ${docker_registry}: ${docker} ${docker_dir} ${docker_compose}
 	docker build --rm -t "base/docker-registry:latest" .
 	docker stop docker-registry || true
 	docker rm docker-registry || true
-	docker create --name=docker-registry --publish=5000:5000 --volume=${docker_registry}:/data docker-registry
+	docker create --name=docker-registry --publish=5000:5000 --volume=${docker_registry}:/data 'base/docker-registry'
 	mkdir -p ${docker_registry}
 	docker start docker-registry
