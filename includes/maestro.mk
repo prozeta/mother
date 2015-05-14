@@ -3,7 +3,7 @@ ${pip}:
 	wget -q https://raw.github.com/pypa/pip/master/contrib/get-pip.py -O/tmp/get-pip.py
 	python /tmp/get-pip.py
 	rm -f /tmp/get-pip.py
-  rm -rf /tmp/pip_build_root
+	rm -rf /tmp/pip_build_root
 	touch ${pip}
 
 ${maestro}: ${pip}
