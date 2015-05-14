@@ -1,6 +1,7 @@
 ${docker}:
+ifeq ($(wildcard ${docker}),)
 	$(info Installing Docker)
-	test -f ${docker} || ( wget -qO- https://get.docker.com/ | sh ) >/dev/null
+	( wget -qO- https://get.docker.com/ | sh ) >/dev/null
 	$(info Stopping Docker)
 	stop docker || true
 	/etc/init.d/docker stop || true
@@ -14,10 +15,13 @@ ${docker}:
 	touch ${docker}
 	$(info Starting Docker)
 	start docker
+endif
 
 ${docker_dir}: ${docker}
 	mkdir -p ${docker_dir}
 
 ${docker_compose}: ${docker}
+ifeq ($(wildcard ${docker_compose}),)
 	curl -L https://github.com/docker/compose/releases/download/1.2.0/docker-compose-`uname -s`-`uname -m` > ${docker_compose}
 	chmod +x ${docker_compose}
+endif
