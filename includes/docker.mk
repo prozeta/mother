@@ -20,6 +20,9 @@ endif
 ${docker_dir}: ${docker}
 	mkdir -p ${docker_dir}
 
+${docker_buildpath}: ${docker}
+	mkdir -p ${docker_buildpath}
+
 ${docker_compose}: ${docker}
 ifeq ($(wildcard ${docker_compose}),)
 	curl -L https://github.com/docker/compose/releases/download/1.2.0/docker-compose-`uname -s`-`uname -m` > ${docker_compose}

@@ -5,6 +5,3 @@ ${prepared}:
 	$(info Installing base tools)
 	${apt_get} install wget python-software-properties python-dev python-yaml ruby git bridge-utils
 	touch ${prepared}
-
-${docker_buildpath}:
-	mkdir -p ${docker_buildpath}
