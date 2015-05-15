@@ -11,18 +11,18 @@ ifeq ($(wildcard ${docker}),)
 	( iptables-save -t nat | grep -i \\-A | grep -i docker | sed s/-A/-D/ | xargs -t -L1 iptables -t nat ) || true
 	( iptables-save -t filter | grep -i \\-A | grep -i docker | sed s/-A/-D/ | xargs -t -L1 iptables -t filter ) || true
 	$(info Configuring Docker)
-	echo "DOCKER_OPTS=\"--bip ${docker_br_ip} --dns ${docker_dns}\"" > /etc/default/docker
+	echo "DOCKER_OPTS=\"--bip $(docker_br_ip) --dns $(docker_dns)\"" > /etc/default/docker
 	touch ${docker}
 	$(info Starting Docker)
 	start docker
 endif
 
-${docker_dir}, ${docker_dir}/images: ${docker}
-	mkdir -p ${docker_dir}
-	mkdir -p ${docker_dir}/images
+$(docker_dir), $(docker_dir)/images: ${docker}
+	mkdir -p $(docker_dir)
+	mkdir -p $(docker_dir)/images
 
-${docker_buildpath}: ${docker}
-	mkdir -p ${docker_buildpath}
+$(docker_buildpath): ${docker}
+	mkdir -p $(docker_buildpath)
 
 ${docker_compose}: ${docker}
 ifeq ($(wildcard ${docker_compose}),)
