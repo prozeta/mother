@@ -16,16 +16,3 @@ ifeq ($(wildcard ${docker}),)
 	$(info Starting Docker)
 	start docker
 endif
-
-$(docker_dir), $(docker_dir)/images: ${docker}
-	mkdir -p $(docker_dir)
-	mkdir -p $(docker_dir)/images
-
-$(docker_buildpath): ${docker}
-	mkdir -p $(docker_buildpath)
-
-${docker_compose}: ${docker}
-ifeq ($(wildcard ${docker_compose}),)
-	curl -L https://github.com/docker/compose/releases/download/1.2.0/docker-compose-`uname -s`-`uname -m` > ${docker_compose}
-	chmod +x ${docker_compose}
-endif

@@ -5,8 +5,6 @@ done := /.mother_pregnant
 # target aliases
 pip := /usr/local/bin/pip
 docker := /usr/bin/docker
-docker_compose := /usr/local/bin/docker-compose
-docker_registry := ${docker_dir}/registry
 
 build_logger := ${docker_dir}/images/logger.tar
 build_puppetmaster := ${docker_dir}/images/puppetmaster.tar
@@ -21,17 +19,14 @@ postgres := /usr/lib/postgresql/9.1/bin/postgres
 foreman_proxy := /usr/share/foreman-proxy/bin/smart-proxy
 
 # phony targets
-all: prepare nginx postgres docker docker_registry maestro dhcp dns
-.PHONY: prepare nginx postgres docker docker_registry maestro dhcp dns
+all: prepare nginx postgres docker maestro dhcp dns
+.PHONY: prepare nginx postgres docker maestro dhcp dns
 
 # aliases
 prepare: ${prepared}
 nginx: ${nginx}
 postgres: ${postgres}
-docker: ${docker} ${docker_dir} ${docker_compose}
-docker_registry: ${docker_registry}
-docker_images: ${docker_logger} ${build_puppetmaster} ${build_puppetdb} ${build_foreman}
+docker: ${docker} ${docker_dir}
 maestro: ${pip} ${maestro}
 dns: ${named}
 dhcp: ${dhcpd}
-# foreman_proxy:
