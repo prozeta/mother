@@ -1,5 +1,5 @@
 require 'yaml'
-require 'mixins'
+require 'mixins.rb'
 import 'rake_methods.rb'
 Dir['tasks/*.rake'].each { |file| import file }
 CONFIG = YAML.load_file('CONFIG.yaml')
