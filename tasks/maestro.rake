@@ -4,6 +4,5 @@ task :maestro do
   runcmd 'python /tmp/get-pip.py'
   FileUtils.rm_f '/tmp/get-pip.py'
   FileUtils.rm_r '/tmp/pip_build_root'
-  FileUtils.rmdir '/tmp/pip_build_root'
   runcmd 'pip install -q --upgrade git+git://github.com/signalfuse/maestro-ng'
 end
