@@ -4,7 +4,7 @@ import 'mixins.rb'
 Dir['tasks/*.rake'].each { |file| import file }
 CONFIG = YAML.load_file('CONFIG.yaml')
 
-if ! am_i_root?
+if ! Process.uid != 0
   puts "Error: you have to be root!".red
   exit 1
 end
