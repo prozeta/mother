@@ -9,10 +9,10 @@ end
 
 task :upgrade_system => [ :update_repos ]
 task :upgrade_system do
-  runcmd 'DEBIAN_FRONTEND=noninteractive apt-get -qqy dist-upgrade'
+  runcmd 'DEBIAN_FRONTEND=noninteractive apt-get -y dist-upgrade'
 end
 
 task :update_repos do
-  runcmd 'DEBIAN_FRONTEND=noninteractive apt-get -qqy update'
+  runcmd 'DEBIAN_FRONTEND=noninteractive apt-get -y update'
 end
 

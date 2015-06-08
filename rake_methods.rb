@@ -2,7 +2,7 @@ def runcmd *args
   cmd = args.join(' ')
   puts ('Running: ' + cmd).blue
   begin
-    `bash -c '#{cmd}'`
+    system "bash -c '#{cmd}'"
     puts ('Finished: ' + cmd).green
   rescue Exception => e
     puts ('Failed: ' + cmd).red
@@ -14,7 +14,7 @@ def install *args
   pkgs = args.join(' ')
   puts ('Installing: ' + pkgs).blue
   begin
-    exec 'DEBIAN_FRONTEND=noninteractive apt-get -qqy install ' + pkgs
+    system "bash -c 'DEBIAN_FRONTEND=noninteractive apt-get -qqy install #{pkgs}'"
     puts ('Installed: ' + pkgs).green
   rescue Exception => e
     puts ('Not installed: ' + pkgs).red
