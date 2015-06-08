@@ -1,8 +1,8 @@
 import 'rake_methods.rb'
+import 'mixins.rb'
 Dir['tasks/*.rake'].each { |file| import file }
 
 task :default => [ :help ]
-
 task :help do
   puts 'Help'
 end

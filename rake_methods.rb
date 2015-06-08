@@ -1,23 +1,24 @@
 def runcmd *args
   cmd = args.join(' ')
-  puts 'Running: ' + cmd
+  puts ('Running: ' + cmd).blue
   begin
-    exec cmd
-    puts 'Finished: ' + cmd
+    `bash -c '#{cmd}'`
+    puts ('Finished: ' + cmd).green
   rescue Exception => e
-    puts 'Failed: ' + cmd
-    puts e.message
+    puts ('Failed: ' + cmd).red
+    puts e.message.red
   end
 end
 
 def install *args
   pkgs = args.join(' ')
-  puts 'Installing: ' + pkgs
+  puts ('Installing: ' + pkgs).blue
   begin
     exec 'DEBIAN_FRONTEND=noninteractive apt-get -qqy install ' + pkgs
-    puts 'Installed: ' + pkgs
-  rescue
-    puts 'Not installed: ' + pkgs
+    puts ('Installed: ' + pkgs).green
+  rescue Exception => e
+    puts ('Not installed: ' + pkgs).red
+    puts e.message.red
   end
 end
 
