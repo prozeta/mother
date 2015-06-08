@@ -1,7 +1,6 @@
 require 'yaml'
-require_relative 'mixins.rb'
-import 'rake_methods.rb'
-Dir['tasks/*.rake'].each { |file| import file }
+require_relative 'lib/mixins.rb'
+import 'lib/rake_methods.rb'
 CONFIG = YAML.load_file('CONFIG.yaml')
 
 if Process.uid != 0
@@ -21,8 +20,9 @@ task :upgrade_system do
   runcmd 'DEBIAN_FRONTEND=noninteractive apt-get -y dist-upgrade'
 end
 
-desc "Update APT repositories"
-task :update_repos do
-  runcmd 'DEBIAN_FRONTEND=noninteractive apt-get -y update'
+namespace :install do
+  Dir['tasks/install/*.rake'].each do |file|
+    import file
+  end
 end
 
