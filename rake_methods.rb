@@ -1,22 +1,22 @@
 def runcmd *args
   cmd = args.join(' ')
-  puts 'Running: ', cmd
+  puts 'Running: ' + cmd
   begin
     system cmd
-    puts 'Finished: ', cmd
+    puts 'Finished: ' + cmd
   rescue
-    puts 'Failed: ', cmd
+    puts 'Failed: ' + cmd
   end
 end
 
 def install *args
   pkgs = args.join(' ')
-  puts 'Installing: ', pkgs
+  puts 'Installing: ' + pkgs
   begin
     system 'DEBIAN_FRONTEND=noninteractive apt-get -qqy install', pkgs
-    puts 'Installed: ', pkgs
+    puts 'Installed: ' + pkgs
   rescue
-    puts 'Not installed:', pkgs
+    puts 'Not installed: ' + pkgs
   end
 end
 
