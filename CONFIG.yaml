@@ -1,5 +1,10 @@
 ---
 :type: ha
-:docker_dir: /docker-data
+:svc_ip_pri: 172.17.0.11/24
+:svc_ip_sec: 172.17.0.12/24
+:svc_ip_float: 172.17.0.10/24
+:repl_ip_pri: 192.168.192.1/24
+:repl_ip_sec: 192.168.192.2/24
 :docker_br_ip: 192.168.168.1/24
 :docker_dns: 172.17.0.10
+:docker_dir: /docker-data

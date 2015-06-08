@@ -1,3 +1,4 @@
+desc "Install Docker"
 task :docker do
   runcmd '( wget -qO- https://get.docker.com/ | sh ) >/dev/null 2>&1'
   runcmd 'stop docker || true'

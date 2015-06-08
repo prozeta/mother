@@ -1,3 +1,4 @@
+desc "Install Maestro"
 task :maestro do
   runcmd 'wget -q https://raw.github.com/pypa/pip/master/contrib/get-pip.py -O/tmp/get-pip.py'
   runcmd 'python /tmp/get-pip.py'
