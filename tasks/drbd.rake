@@ -1,3 +1,3 @@
 task :drbd do
-  install 'drbd8-utils'
+  deb_install 'drbd8-utils'
 end

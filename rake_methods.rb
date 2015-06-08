@@ -10,7 +10,7 @@ def runcmd *args
   end
 end
 
-def install *args
+def deb_install *args
   pkgs = args.join(' ')
   puts ('Installing: ' + pkgs).blue
   begin
