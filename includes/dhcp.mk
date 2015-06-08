@@ -1,5 +1,5 @@
-${dhcpd}:
-ifeq ($(wildcard ${dhcpd}),)
-	${apt_get} install isc-dhcp-server
-	touch ${dhcpd)
+${dhcrelay}:
+ifeq ($(wildcard ${dhcrelay}),)
+	${apt_get} install isc-dhcp-relay
+	touch ${dhcrelay)
 endif
