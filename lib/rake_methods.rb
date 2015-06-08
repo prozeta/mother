@@ -1,7 +1,7 @@
 def runcmd *args
   cmd = args.join(' ')
   begin
-    system "bash -c '#{cmd} >> /tmp/mother_cmds.log 2>&1'"
+    system "bash -c '#{cmd}' >> /tmp/mother_cmds.log 2>&1"
   rescue Exception => e
     puts 'Failed: '.red + cmd
     puts e.message.yellow
