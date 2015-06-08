@@ -1,4 +1,4 @@
-import 'rake_methods'
+import 'rake_methods.rb'
 Dir['tasks/*.rake'].each { |file| import file }
 
 task :default => [ :help ]
