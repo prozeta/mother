@@ -4,7 +4,10 @@ import 'mixins.rb'
 Dir['tasks/*.rake'].each { |file| import file }
 CONFIG = YAML.load_file('CONFIG.yaml')
 
-{ puts "Error: you have to be root!"; exit 1; } if ! am_i_root?
+if ! am_i_root?
+  puts "Error: you have to be root!".red
+  exit 1
+end
 
 task :default => [ :help ]
 task :help do
