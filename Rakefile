@@ -4,7 +4,7 @@ import 'rake_methods.rb'
 Dir['tasks/*.rake'].each { |file| import file }
 CONFIG = YAML.load_file('CONFIG.yaml')
 
-if ! Process.uid != 0
+if Process.uid != 0
   puts "Error: you have to be root!".red
   exit 1
 end
