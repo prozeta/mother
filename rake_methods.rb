@@ -4,8 +4,9 @@ def runcmd *args
   begin
     exec cmd
     puts 'Finished: ' + cmd
-  rescue
+  rescue Exception => e
     puts 'Failed: ' + cmd
+    puts e.message
   end
 end
 
