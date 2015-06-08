@@ -28,3 +28,7 @@ class String
     colorize(36)
   end
 end
+
+def am_i_root?
+  Process.uid == 0 ? true : false
+end

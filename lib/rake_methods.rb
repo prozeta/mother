@@ -17,7 +17,3 @@ def deb_install *args
     puts e.message.yellow
   end
 end
-
-def am_i_root?
-  Process.uid == 0 ? true : false
-end
