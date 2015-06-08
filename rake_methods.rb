@@ -3,8 +3,8 @@ def runcmd *args
   begin
     system "bash -c '#{cmd} >> /tmp/mother_install.log 2>&1'"
   rescue Exception => e
-    puts ('Failed: ' + cmd).red
-    puts e.message.red
+    puts 'Failed: '.red + cmd
+    puts e.message.yellow
   end
 end
 
@@ -14,7 +14,7 @@ def deb_install *args
     system "bash -c 'DEBIAN_FRONTEND=noninteractive apt-get -qqy install #{pkgs}'"
   rescue Exception => e
     puts ('Not installed: ' + pkgs).red
-    puts e.message.red
+    puts e.message.yellow
   end
 end
 
