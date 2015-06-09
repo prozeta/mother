@@ -29,9 +29,8 @@ iface bond0 inet static
     netmask #{self.mask}
     slaves #{self.slave_ifs.join(' ')}
     bond_mode 4
-    bond_miimon 100
-    bond_downdelay 200
-    bond_updelay 200\n\n"
+    bond-lacp-rate 1
+    bond_miimon 100\n\n"
   end
 
   def conf_eth
