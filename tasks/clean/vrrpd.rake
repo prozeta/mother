@@ -1,3 +1,4 @@
+desck "Clean VRRPd build artifacts"
 task :vrrpd do |t|
   info t.name + ": started"
   if File.exists? '/tmp/vrrp'

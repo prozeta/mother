@@ -48,6 +48,12 @@ namespace :system do
   end
 end
 
+namespace :config do
+  Dir['tasks/config/*.rake'].each do |file|
+    load file
+  end
+end
+
 namespace :install do
   Dir['tasks/install/*.rake'].each do |file|
     load file
