@@ -32,6 +32,12 @@ end
 
 task :default => [ :help ]
 
+namespace :clean do
+  Dir['tasks/clean/*.rake'].each do |file|
+    load file
+  end
+end
+
 namespace :system do
   Dir['tasks/system/*.rake'].each do |file|
     load file
