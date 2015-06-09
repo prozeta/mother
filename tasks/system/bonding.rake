@@ -5,7 +5,7 @@ task :bonding do |t|
   info t.name + ": creating bonding config"
   Bonding.new.write
   info t.name + ": starting bonding & setting up interfaces"
-  runcmd 'ifdown -f ' + CONFIG[:net][:repl][:if]
+  runcmd 'ifdown --force ' + CONFIG[:net][:repl][:if]
   runcmd 'ifup ' + CONFIG[:net][:repl][:if]
   info t.name + ": finished"
 end
