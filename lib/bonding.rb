@@ -1,6 +1,6 @@
 class Bonding
 
-  require 'ipadd'
+  require 'ipaddr'
 
   attr_accessor :slave_ifs
   attr_accessor :bond_if
