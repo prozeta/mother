@@ -1,0 +1,6 @@
+desc "Some description"
+task :name => [ "dependency" ]
+task :name do |t|
+  info t.name + ": started"
+  info t.name + ": finished"
+end

@@ -1,5 +1,7 @@
-#!/usr/bin/env ruby
+class Maestro
 
-require 'rubygems' if RUBY_VERSION < '1.9'
-require 'yaml'
+  def initialize
 
+  end
+
+end
