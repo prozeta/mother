@@ -1,9 +1,9 @@
 def cmdlog logline
-  File.open("/tmp/mother_cmds.log", "a") { |f| f << Time.now.to_s + ": CMD " + logline }
+  File.open("/tmp/mother_cmds.log", "a") { |f| f << Time.now.to_s + ": CMD " + logline + "\n" }
 end
 
 def aptlog logline
-  File.open("/tmp/mother_apt.log", "a") { |f| f << Time.now.to_s + ": APT " + logline }
+  File.open("/tmp/mother_apt.log", "a") { |f| f << Time.now.to_s + ": APT " + logline + "\n" }
 end
 
 
