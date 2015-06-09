@@ -25,7 +25,7 @@ class Bonding
   end
 
   def conf_eth
-    out = ""
+    out = String.new
     self.slave_ifs.each do |iface|
       out += "auto #{iface}\niface #{iface} inet manual\n\tbond-master #{self.bond_if}\n\n"
     end
