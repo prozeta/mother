@@ -28,7 +28,7 @@ iface bond0 inet static
     address #{self.ip}
     netmask #{self.mask}
     slaves #{self.slave_ifs.join(' ')}
-    bond_mode active-backup
+    bond_mode 4
     bond_miimon 100
     bond_downdelay 200
     bond_updelay 200\n\n"
