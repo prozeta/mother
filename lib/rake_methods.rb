@@ -31,7 +31,7 @@ def deb_install *args
   pkgs = args.join(' ')
   begin
     aptlog "install -> " + pkgs
-    system "bash -c 'DEBIAN_FRONTEND=noninteractive apt-get -y install #{pkgs} >/tmp/mother_apt.log 2>&1'"
+    system "bash -c 'DEBIAN_FRONTEND=noninteractive apt-get -y install #{pkgs} >> /tmp/mother_apt.log 2>&1'"
     info "Installed DEBs: " + pkgs
     if $? > 0
       err 'DEB installation failed: ' + pkgs
