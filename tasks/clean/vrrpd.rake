@@ -1,5 +1,5 @@
 task :vrrpd do |t|
-  if FileUtils.exists '/tmp/vrrp'
+  if File.exists? '/tmp/vrrp'
     FileUtils.rm_r '/tmp/vrrp'
     FileUtils.rmdir '/tmp/vrrp'
   end
