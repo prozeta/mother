@@ -1,5 +1,5 @@
 desc "Configure Docker"
-task :docker do
+task :docker do |t|
   info t.name + ": started"
   info t.name + ": cleaning old Docker bridge network config"
   runcmd 'ip l s dev docker0 down || true'
