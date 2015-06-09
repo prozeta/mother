@@ -1,5 +1,4 @@
 desc "Install all needed software"
-task :install => ["system:upgrade"]
 task :install do |t|
   info t.name + ": started"
   Rake::Task["install:dhcp"].invoke
