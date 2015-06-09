@@ -6,7 +6,6 @@ def aptlog logline
   File.open("/tmp/mother_apt.log", "a") { |f| f << Time.now.to_s + ": APT " + logline + "\n" }
 end
 
-
 def runcmd *args
   cmd = args.join(' ')
   begin
