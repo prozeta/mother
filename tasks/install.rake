@@ -6,7 +6,7 @@ task :install do |t|
   Rake::Task["install:drbd"].execute
   Rake::Task["install:docker"].execute
   Rake::Task["install:haproxy"].execute
-  Rake::Task["install:mestro"].execute
+  Rake::Task["install:maestro"].execute
   Rake::Task["install:vrrpd"].execute
   info t.name + ": finished"
 end
