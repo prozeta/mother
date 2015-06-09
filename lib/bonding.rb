@@ -7,7 +7,6 @@ class Bonding
   attr_accessor :ip
   attr_accessor :mask
 
-
   def initialize
     if ENV["role"] == "sec"
       ( ipaddr, cidr ) = CONFIG[:net][:repl][:ip_sec].split('/')
