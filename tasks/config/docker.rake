@@ -1,6 +1,9 @@
 desc "Configure Docker"
 task :docker do |t|
   info t.name + ": started"
+  info t.name + ": stopping Docker"
+  runcmd 'stop docker || true'
+  runcmd '/etc/init.d/docker stop || true'
   info t.name + ": cleaning old Docker bridge network config"
   runcmd 'ip l s dev docker0 down || true'
   runcmd 'brctl delbr docker0 || true'
