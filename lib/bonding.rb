@@ -21,24 +21,13 @@ class Bonding
   end
 
   def conf_bond
-    "# created automatically by Project Mother
-auto #{self.bond_if}
-iface bond0 inet static
-    address #{self.ip}
-    netmask #{self.mask}
-    slaves #{self.slave_ifs.join(' ')}
-    bond_mode 4
-    bond-lacp-rate 1
-    bond_miimon 100\n\n"
+    "auto #{self.bond_if}\niface bond0 inet static\n\taddress #{self.ip}\n\tnetmask #{self.mask}\n\tslaves #{self.slave_ifs.join(' ')}\n\tbond_mode 4\n\tbond-lacp-rate 1\n\tbond_miimon 100\n\n"
   end
 
   def conf_eth
     out = ""
     self.slave_ifs.each do |iface|
-      out += "# created automatically by Project Mother
-auto #{iface}
-iface #{iface} inet manual
-    bond-master #{self.bond_if}\n\n"
+      out += "auto #{iface}\niface #{iface} inet manual\n\tbond-master #{self.bond_if}\n\n"
     end
     out
   end
