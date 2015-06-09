@@ -16,14 +16,14 @@ def runcmd *args
       err "Failed running command: " + cmd
       cmdlog "fail -> " + cmd
       warn "Check /tmp/mother_cmds.log for output"
-      exit 1
+      exit! 1
     end
   rescue Exception => e
     err "Failed running command: " + cmd
     err e.message
     cmdlog "fail -> " + cmd
     cmdlog "exception -> " + e.message
-    exit 1
+    exit! 1
   end
 end
 
@@ -37,13 +37,13 @@ def deb_install *args
       err 'DEB installation failed: ' + pkgs
       aptlog "fail -> " + pkgs
       warn "Check /tmp/mother_apt.log for output"
-      exit 1
+      exit! 1
     end
   rescue Exception => e
     err 'DEB installation failed: ' + pkgs
     err e.message
     aptlog "fail -> " + pkgs
     aptlog "exception => " + e.message
-    exit 1
+    exit! 1
   end
 end
