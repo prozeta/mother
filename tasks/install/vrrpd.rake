@@ -1,5 +1,6 @@
 desc "Install VRRPd"
 task :vrrpd do
+  info "installing VRRPd"
   FileUtils.rm_r '/tmp/vrrp'
   FileUtils.rmdir '/tmp/vrrp'
   runcmd 'git clone https://github.com/fredbcode/Vrrpd.git /tmp/vrrp'
@@ -8,4 +9,5 @@ task :vrrpd do
   FileUtils.cp '/tmp/vrrp/atropos', '/usr/local/bin/atropos'
   FileUtils.rm_r '/tmp/vrrp'
   FileUtils.rmdir '/tmp/vrrp'
+  info "VRRPd installed"
 end
