@@ -1,10 +1,10 @@
 desc "Update APT repositories"
-task :update_repos do
+task :update_apt do
   runcmd 'DEBIAN_FRONTEND=noninteractive apt-get -qqy update'
 end
 
 desc "Run dist-upgrade"
-task :upgrade_system => [ :update_repos ]
-task :upgrade_system do
+task :upgrade => [ :update_apt ]
+task :upgrade do
   runcmd 'DEBIAN_FRONTEND=noninteractive apt-get -qqy dist-upgrade'
 end

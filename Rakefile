@@ -44,3 +44,9 @@ namespace :install do
   end
 end
 
+namespace :ha do
+  Dir['tasks/ha/*.rake'].each do |file|
+    load file
+  end
+end
+
