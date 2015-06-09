@@ -1,13 +1,13 @@
 def info arg
-  puts ( Time.now.to_s + " INF: " + arg.to_s ).green
+  puts ( Time.now.to_s + "  INFO: " + arg.to_s ).green
 end
 
 def warn arg
-  puts ( Time.now.to_s + " WRN: " + arg.to_s ).yellow
+  puts ( Time.now.to_s + "  WARN: " + arg.to_s ).yellow
 end
 
 def err arg
-  puts ( Time.now.to_s + " ERR: " + arg.to_s ).red
+  puts ( Time.now.to_s + " ERROR: " + arg.to_s ).red
 end
 
 def am_i_root?
