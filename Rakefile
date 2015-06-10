@@ -27,7 +27,7 @@ CONFIG = YAML.load_file('CONFIG.yaml')
 ## UID CHECK (must be root)
 ##
 if ! am_i_root?
-  puts "FATAL: you have to be root!".red
+  err "You have to be root!"
   exit 1
 end
 
@@ -35,14 +35,9 @@ end
 ## CONFIG CHECK (mandatory variables)
 ##
 if CONFIG[:ha] && ENV["role"] !~ /^(pri|sec)$/
-  puts "ERROR: you have to specify the role of this host for HA mode.".yellow
-  puts "\ta) rake [task] role=(pri|sec)"
-  puts "\tb) export role=(pri|sec)"
-  exit 1
-elsif CONFIG[:ha]
-  #
-else
-  puts "FATAL: unknown HA mode!"
+  err "You have to specify the role of this host for HA mode."
+  warn "\ta) rake [task] role=(pri|sec)"
+  warn "\tb) export role=(pri|sec)"
   exit 1
 end
 
