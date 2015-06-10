@@ -18,7 +18,7 @@ task :drbd do |t|
   else
     info t.name + ": adding to /etc/fstab if missing."
     runcmd 'grep -q ' + CONFIG[:drbd][:device] + ' /etc/fstab || echo -e "' + CONFIG[:drbd][:device] + '\t' + CONFIG[:docker][:storage][:repl] + '\t\text4\tdefaults,ro\t0\t0" >> /etc/fstab'
-    info t.name + ": nounting #{CONFIG[:drbd][:device]} into #{CONFIG[:docker][:storage][:repl]} (ro)"
+    info t.name + ": mounting #{CONFIG[:drbd][:device]} into #{CONFIG[:docker][:storage][:repl]} (ro)"
     runcmd 'grep -q "' + CONFIG[:docker][:storage][:repl] + '" /proc/mounts || mount ' + CONFIG[:docker][:storage][:repl]
   end
   info t.name + ": finished"
