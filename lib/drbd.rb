@@ -26,7 +26,7 @@ class Drbd
   end
 
   def node (name, device, disk, address)
-    "  on #{name} { device #{device}; disk #{disk}; address #{address}:7789; meta-disk: internal; }\n"
+    "  on #{name} { device #{device}; disk #{disk}; address #{address}:7789; meta-disk internal; }\n"
   end
 
   def write
