@@ -5,7 +5,7 @@ task :drbd do |t|
   info t.name + ": gerenating DRBD config files"
   Drbd.new.write
   info t.name + ": starting DRBD resources"
-  runcmd 'drbdadm sh-resource r02 || drbdadm create-md r0'
+  runcmd 'drbdadm sh-resource r0 || drbdadm create-md r0'
   if is_pri?
     info t.name + ": this node is primary, switching DRBD resources acordingly"
     runcmd 'drbdadm primary --force all'
