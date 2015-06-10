@@ -42,6 +42,6 @@ class Drbd
 
   def write
     File.open("/etc/drbd.d/global_common.conf", "w")  { |f| f << self.conf_globals }
-    File.open("/etc/drbd.d/r0.conf", "w")             { |f| f << self.conf_r0 }
+    File.open("/etc/drbd.d/r0.res", "w")              { |f| f << self.conf_r0 }
   end
 end
