@@ -4,16 +4,26 @@ class Drbd
   attr_reader :ip_sec
   attr_reader :disk
   attr_reader :device
+  attr_reader :passphrase
 
   def initialize
      @ip_pri = CONFIG[:net][:repl][:ip_pri].split('/')[0]
      @ip_sec = CONFIG[:net][:repl][:ip_sec].split('/')[0]
      @disk = CONFIG[:drbd][:disk]
      @device = CONFIG[:drbd][:device]
+     @passphrase = CONFIG[:drbd][:passphrase]
   end
 
   def conf_globals
-    "global { usage-count yes; }\ncommon { net { protocol C; } }\n"
+    "global { usage-count yes; }\n" +
+    "common {\n" +
+    "  net {\n" +
+    "    protocol C;\n" +
+    "    cram-hmac-alg sha1;\n" +
+    "    shared-secret \"#{self.passphrase}\";\n" +
+    "  }\n" +
+    "  syncer { rate 5G; }\n" +
+    "}\n"
   end
 
   def conf_r0
