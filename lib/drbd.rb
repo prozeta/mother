@@ -17,7 +17,7 @@ class Drbd
   end
 
   def conf_r0
-    nodes = self.node('mother1', self.pri_ip) + self.node('mother2', self.sec_ip)
+    nodes = self.node('mother1', self.ip_pri) + self.node('mother2', self.ip_sec)
     "resource r0 {\n" +
     "  disk #{self.disk};\n" +
     "  device #{self.device}\n" +
