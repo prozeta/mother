@@ -7,8 +7,8 @@ task :vrrpd do |t|
   info t.name + ": compiling VRRPd"
   runcmd 'cd /tmp/vrrp; make clean; make'
   info t.name + ": installing VRRPd"
-  cp '/tmp/vrrp/vrrpd', '/usr/local/bin/vrrpd'
-  cp '/tmp/vrrp/atropos', '/usr/local/bin/atropos'
+  FileUtils.cp '/tmp/vrrp/vrrpd', '/usr/local/bin/vrrpd'
+  FileUtils.cp '/tmp/vrrp/atropos', '/usr/local/bin/atropos'
   Rake::Task["clean:vrrpd"].execute
   info t.name + ": finished"
 end
