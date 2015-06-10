@@ -22,7 +22,8 @@ class Drbd
     "  disk #{self.disk};\n" +
     "  device #{self.device}\n" +
     "  meta-disk internal;\n" +
-    "#{nodes}\n}"
+    nodes +
+    "}"
   end
 
   def node (name, address)
