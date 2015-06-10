@@ -15,6 +15,10 @@
     :slave_ifs:
     - eth0
     - eth1
+:drbd:
+  :pri: /dev/mother/drbd1
+  :sec: /dev/mother/drbd1
+  :dev: /dev/drbd1
 :docker:
   :dns: 172.17.0.10
   :br_ip: 192.168.192.1/24
