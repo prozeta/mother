@@ -30,7 +30,7 @@ class Drbd
     nodes = self.node('mother1', self.ip_pri) + self.node('mother2', self.ip_sec)
     "resource r0 {\n" +
     "  disk #{self.disk};\n" +
-    "  device #{self.device}\n" +
+    "  device #{self.device};\n" +
     "  meta-disk internal;\n" +
     nodes +
     "}\n"
