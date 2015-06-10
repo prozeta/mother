@@ -10,16 +10,16 @@ task :drbd do |t|
     info t.name + ": This node is primary, switching DRBD resources acordingly"
     runcmd 'drbdadm primary --force all'
     info t.name + ": Formatting #{CONFIG[:drbd][:device]} if there's no FS"
-    runcmd 'grep -q ' + CONFIG[:drbd][:device] + ' <(blkid) || mkfs.ext3 ' + CONFIG[:drbd][:device]
+    runcmd 'grep -q ' + CONFIG[:drbd][:device] + ' <(blkid) || mkfs.ext4 ' + CONFIG[:drbd][:device]
     info t.name + ": Adding to /etc/fstab if missing."
     runcmd 'grep -q ' + CONFIG[:drbd][:device] + ' /etc/fstab || echo -e "' + CONFIG[:drbd][:device] + '\t' + CONFIG[:docker][:storage][:repl] + '\t\text4\tdefaults,ro\t0\t0" >> /etc/fstab'
     info t.name + ": Mounting #{CONFIG[:drbd][:device]} into #{CONFIG[:docker][:storage][:repl]} (rw)"
-    runcmd 'mount -o rw ' + CONFIG[:docker][:storage][:repl]
+    runcmd 'grep "' + CONFIG[:docker][:storage][:repl] + '" /proc/mounts || mount -o rw ' + CONFIG[:docker][:storage][:repl]
   else
     info t.name + ": Adding to /etc/fstab if missing."
     runcmd 'grep -q ' + CONFIG[:drbd][:device] + ' /etc/fstab || echo -e "' + CONFIG[:drbd][:device] + '\t' + CONFIG[:docker][:storage][:repl] + '\t\text4\tdefaults,ro\t0\t0" >> /etc/fstab'
     info t.name + ": Mounting #{CONFIG[:drbd][:device]} into #{CONFIG[:docker][:storage][:repl]} (ro)"
-    runcmd 'mount ' + CONFIG[:docker][:storage][:repl]
+    runcmd 'grep "' + CONFIG[:docker][:storage][:repl] + '" /proc/mounts || mount ' + CONFIG[:docker][:storage][:repl]
   end
   info t.name + ": finished"
 end
