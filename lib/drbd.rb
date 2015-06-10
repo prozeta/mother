@@ -22,7 +22,7 @@ class Drbd
     "    cram-hmac-alg sha1;\n" +
     "    shared-secret \"#{self.passphrase}\";\n" +
     "  }\n" +
-    "  syncer { rate 5G; }\n" +
+    "  syncer { rate 4194304k; }\n" +
     "}\n"
   end
 
