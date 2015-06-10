@@ -16,9 +16,9 @@
     - eth0
     - eth1
 :drbd:
-  :pri: /dev/mother/drbd1
-  :sec: /dev/mother/drbd1
-  :dev: /dev/drbd1
+  :disk: /dev/mother/drbd1
+  :device: /dev/drbd1
+  :passphrase: Cuc7ShwucMan
 :docker:
   :dns: 172.17.0.10
   :br_ip: 192.168.192.1/24

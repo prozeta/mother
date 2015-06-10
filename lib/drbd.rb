@@ -1,17 +1,15 @@
 class Drbd
 
-  attr_reader :pri_ip
-  attr_reader :pri_bd
-  attr_reader :sec_ip
-  attr_reader :sec_bd
-  attr_reader :drbd_dev
+  attr_reader :ip_pri
+  attr_reader :ip_sec
+  attr_reader :disk
+  attr_reader :device
 
   def initialize
-     @pri_ip = CONFIG[:net][:repl][:ip_pri].split('/')[0]
-     @pri_bd = CONFIG[:drbd][:pri]
-     @sec_ip = CONFIG[:net][:repl][:ip_sec].split('/')[0]
-     @sec_bd = CONFIG[:drbd][:sec]
-     @drbd_dev = CONFIG[:drbd][:dev]
+     @ip_pri = CONFIG[:net][:repl][:ip_pri].split('/')[0]
+     @ip_sec = CONFIG[:net][:repl][:ip_sec].split('/')[0]
+     @disk = CONFIG[:drbd][:disk]
+     @device = CONFIG[:drbd][:device]
   end
 
   def conf_globals
@@ -19,14 +17,16 @@ class Drbd
   end
 
   def conf_r0
-    nodes = String.new
-    nodes += self.node('mother1', self.drbd_dev, self.pri_bd, self.pri_ip)
-    nodes += self.node('mother2', self.drbd_dev, self.sec_bd, self.sec_ip)
-    "resource r0 {\n" + nodes + "}\n"
+    nodes = self.node('mother1', self.pri_ip) + self.node('mother2', self.sec_ip)
+    "resource r0 {\n" +
+    "  disk #{self.disk};\n" +
+    "  device #{self.device}\n" +
+    "  meta-disk internal;\n" +
+    "#{nodes}\n}"
   end
 
-  def node (name, device, disk, address)
-    "  on #{name} { device #{device}; disk #{disk}; address #{address}:7789; meta-disk internal; }\n"
+  def node (name, address)
+    "  on #{name} { address #{address}:7789; }\n"
   end
 
   def write
