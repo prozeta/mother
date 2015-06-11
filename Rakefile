@@ -2,10 +2,12 @@ require 'yaml'
 require_relative 'lib/mixins.rb'
 require_relative 'lib/helpers.rb'
 
+Rake::TaskManager.record_task_metadata = true
+Rake::Application.name = "mother"
+
 ##
 ## HELP
 ##
-Rake::TaskManager.record_task_metadata = true
 desc "This help"
 task :help do
   Rake::application.options.show_tasks = :tasks
