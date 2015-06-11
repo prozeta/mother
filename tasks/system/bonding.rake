@@ -1,6 +1,6 @@
 desc "Configure bonding interfaces"
 task :bonding do |t|
-  task_begin
+  task_begin t.name
   require_relative '../../lib/bonding.rb'
   info t.name + ": creating bonding config"
   Bonding.new.write
@@ -11,5 +11,5 @@ task :bonding do |t|
   CONFIG[:net][:bonding][:slave_ifs].each { |eth| runcmd 'ifup ' + eth }
   sleep 1
   runcmd 'ifup ' + CONFIG[:net][:bonding][:if]
-  task_end
+  task_end t.name
 end

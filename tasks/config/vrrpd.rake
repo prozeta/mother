@@ -1,6 +1,6 @@
 desc "Configure VRRPd"
 task :vrrpd do |t|
-  task_begin
+  task_begin t.name
   Vrrpd.new.write
-  task_end
+  task_end t.name
 end

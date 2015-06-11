@@ -1,6 +1,6 @@
 desc "Configure DRBD"
 task :drbd do |t|
-  task_begin
+  task_begin t.name
   require_relative '../../lib/drbd.rb'
   info t.name + ": gerenating DRBD config files"
   Drbd.new.write
@@ -21,5 +21,5 @@ task :drbd do |t|
     info t.name + ": mounting #{CONFIG[:drbd][:device]} into #{CONFIG[:docker][:storage][:repl]} (ro)"
     runcmd 'grep -q "' + CONFIG[:docker][:storage][:repl] + '" /proc/mounts || mount ' + CONFIG[:docker][:storage][:repl]
   end
-  task_end
+  task_end t.name
 end

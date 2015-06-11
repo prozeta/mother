@@ -1,6 +1,6 @@
 desc "Install Maestro"
 task :maestro do |t|
-  task_begin
+  task_begin t.name
   info t.name + ": started"
   info t.name + ": downloading PIP installer"
   runcmd 'wget -q https://raw.github.com/pypa/pip/master/contrib/get-pip.py -O/tmp/get-pip.py'
@@ -9,5 +9,5 @@ task :maestro do |t|
   info t.name + ": installing Maestro"
   runcmd 'pip install -q --upgrade git+git://github.com/signalfuse/maestro-ng'
   Rake::Task["clean:maestro"].execute
-  task_end
+  task_end t.name
 end
