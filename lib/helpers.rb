@@ -19,9 +19,9 @@ def is_pri?
 end
 
 def task_begin task_name
-  puts ( Time.now.to_s + "  INFO: " + task_name + " TASK BEGIN" ).green
+  puts ( Time.now.to_s + "  INFO: " + task_name + " +++" ).green
 end
 
 def task_end task_name
-  puts ( Time.now.to_s + "  INFO: " + task_name + " TASK END" ).green
+  puts ( Time.now.to_s + "  INFO: " + task_name + " ---" ).green
 end
