@@ -1,7 +1,6 @@
 desc "Install Maestro"
 task :maestro do |t|
   task_begin t.name
-  info t.name + ": started"
   info t.name + ": downloading PIP installer"
   runcmd 'wget -q https://raw.github.com/pypa/pip/master/contrib/get-pip.py -O/tmp/get-pip.py'
   info t.name + ": installing PIP"
