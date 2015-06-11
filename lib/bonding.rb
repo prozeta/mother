@@ -11,7 +11,7 @@ class Bonding
     if ENV["role"] == "sec"
       ( ipaddr, cidr ) = CONFIG[:net][:repl][:ip_sec].split('/')
     else
-      ( ipaddr, cidr ) = CONFIG[:net][:repl][:ip_sec].split('/')
+      ( ipaddr, cidr ) = CONFIG[:net][:repl][:ip_pri].split('/')
     end
 
     @slave_ifs = CONFIG[:net][:bonding][:slave_ifs]
