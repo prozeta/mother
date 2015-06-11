@@ -21,7 +21,7 @@ import 'lib/rake_methods.rb'
 ##
 ## CONFIG LOAD
 ##
-CONFIG = YAML.load_file('CONFIG.yaml')
+CONFIG = YAML.load_file('/etc/mother.yaml')
 
 ##
 ## UID CHECK (must be root)
