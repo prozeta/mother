@@ -1,3 +1,5 @@
+all: uninstall install
+
 install:
 	/bin/mkdir -p /var/lib/mother/tasks /var/lib/mother/lib
 	/usr/bin/find tasks -name *.rake | /usr/bin/xargs -L1 -I{} /usr/bin/install -D -o root -g root -m 644 {} /var/lib/mother/{}
