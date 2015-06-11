@@ -1,6 +1,6 @@
 desc "Install all needed software"
 task :install do |t|
-  info t.name + ": started"
+  task_begin t.name
   Rake::Task["install:dhcp"].invoke
   Rake::Task["install:dns"].invoke
   Rake::Task["install:drbd"].invoke
@@ -8,5 +8,5 @@ task :install do |t|
   Rake::Task["install:haproxy"].invoke
   Rake::Task["install:maestro"].invoke
   Rake::Task["install:vrrpd"].invoke
-  info t.name + ": finished"
+  task_end t.name
 end

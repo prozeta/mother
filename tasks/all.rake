@@ -1,8 +1,8 @@
 desc "Do it all!"
 task :all do |t|
-  info t.name + ": started"
+  task_begin t.name
   Rake::Task["system:prepare"].invoke
   Rake::Task["install"].invoke
   Rake::Task["config"].invoke
-  info t.name + ": finished"
+  task_end t.name
 end
