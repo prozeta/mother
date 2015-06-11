@@ -1,6 +1,6 @@
 desc "Configure Docker"
 task :docker do |t|
-  info t.name + ": started"
+  task_begin
   info t.name + ": stopping Docker"
   runcmd 'stop docker || true'
   runcmd '/etc/init.d/docker stop || true'
@@ -16,4 +16,5 @@ task :docker do |t|
   runcmd 'start docker'
   runcmd 'ip l s dev docker0 up'
   info t.name + ": finished"
+  task_end
 end

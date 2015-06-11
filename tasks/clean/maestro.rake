@@ -1,7 +1,7 @@
 desc "Clean Maestro build artifacts"
 task :maestro do |t|
-  info t.name + ": started"
+  task_begin
   info t.name + ": removing PIP installer"
   FileUtils.rm_f '/tmp/get-pip.py'
-  info t.name + ": finished"
+  task_end
 end

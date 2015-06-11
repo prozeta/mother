@@ -1,8 +1,8 @@
 desc "Clean VRRPd build artifacts"
 task :vrrpd do |t|
-  info t.name + ": started"
+  task_begin
   if File.exists? '/tmp/vrrp'
     FileUtils.rm_rf '/tmp/vrrp'
   end
-  info t.name + ": finished"
+  task_end
 end

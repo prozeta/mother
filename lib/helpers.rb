@@ -17,3 +17,11 @@ end
 def is_pri?
   ( ENV['role'] == "pri" && CONFIG[:ha] ) || ! CONFIG[:ha]
 end
+
+def task_begin
+  puts ( Time.now.to_s + "  INFO: " + t.name + " TASK BEGIN" ).green
+end
+
+def task_end
+  puts ( Time.now.to_s + "  INFO: " + t.name + " TASK END" ).green
+end

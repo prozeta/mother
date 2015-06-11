@@ -1,6 +1,6 @@
 desc "Install VRRPd"
 task :vrrpd do |t|
-  info t.name + ": started"
+  task_begin
   Rake::Task["clean:vrrpd"].execute
   info t.name + ": downloading VRRPd"
   runcmd 'git clone https://github.com/fredbcode/Vrrpd.git /tmp/vrrp'
@@ -10,5 +10,5 @@ task :vrrpd do |t|
   FileUtils.cp '/tmp/vrrp/vrrpd', '/usr/local/bin/vrrpd'
   FileUtils.cp '/tmp/vrrp/atropos', '/usr/local/bin/atropos'
   Rake::Task["clean:vrrpd"].execute
-  info t.name + ": finished"
+  task_end
 end

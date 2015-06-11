@@ -1,6 +1,6 @@
 desc "Install DRBD"
 task :drbd do |t|
-  info t.name + ": started"
+  task_begin
   deb_install 'drbd8-utils'
-  info t.name + ": finished"
+  task_end
 end

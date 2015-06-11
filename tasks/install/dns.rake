@@ -1,6 +1,6 @@
 desc "Install DNS utils (nsupdate)"
 task :dns do |t|
-  info t.name + ": started"
+  task_begin
   deb_install 'dnsutils'
-  info t.name + ": finished"
+  task_end
 end
