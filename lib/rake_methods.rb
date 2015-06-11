@@ -47,3 +47,11 @@ def deb_install *args
     exit! 1
   end
 end
+
+def task_begin task_name
+  puts ( Time.now.to_s + "  INFO: started task [" + task_name + "]" ).green
+end
+
+def task_end task_name
+  puts ( Time.now.to_s + "  INFO: finished task [" + task_name + "]" ).green
+end
