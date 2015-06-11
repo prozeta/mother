@@ -1,7 +1,6 @@
 desc "Install Docker"
 task :docker do |t|
   task_begin t.name
-  info t.name + ": started"
   info t.name + ": running Docker install script"
   runcmd 'wget -qO- https://get.docker.com/ | sh'
   info t.name + ": creating Docker data directories"
