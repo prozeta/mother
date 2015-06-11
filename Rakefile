@@ -36,7 +36,7 @@ end
 ##
 if CONFIG[:ha] && ENV["role"] !~ /^(pri|sec)$/
   err "You have to specify the role of this host for HA mode."
-  warn "\ta) rake [task] role=(pri|sec)"
+  warn "\ta) mother [task] role=(pri|sec)"
   warn "\tb) export role=(pri|sec)"
   exit 1
 end
