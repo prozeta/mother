@@ -49,9 +49,9 @@ def deb_install *args
 end
 
 def task_begin task_name
-  puts ( Time.now.to_s + "  INFO: started task [" + task_name + "]" ).green
+  puts ( Time.now.to_s + "  INFO: " + task_name + ": task started" ).green
 end
 
 def task_end task_name
-  puts ( Time.now.to_s + "  INFO: finished task [" + task_name + "]" ).green
+  puts ( Time.now.to_s + "  INFO: " + task_name + ": task finished" ).green
 end
