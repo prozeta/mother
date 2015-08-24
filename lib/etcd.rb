@@ -1,4 +1,4 @@
 module Mother
-  module Maestro
+  class Etcd
   end
 end
