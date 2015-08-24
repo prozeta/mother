@@ -34,7 +34,7 @@
     - ""
 :dns:
   :ports: [ 53 ]
-  :zones: [ "fbr", "23.172.in-addr.arpa" ]
+  :zones: []
   :forwarders: [ "8.8.8.8", "8.8.4.4" ]
   :volumes:
     - ""
