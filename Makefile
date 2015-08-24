@@ -5,7 +5,7 @@ install:
 	/usr/bin/find tasks -name *.rake | /usr/bin/xargs -L1 -I{} /usr/bin/install -D -o root -g root -m 644 {} /var/lib/mother/{}
 	/usr/bin/find lib -name *.rb | /usr/bin/xargs -L1 -I{} /usr/bin/install -D -o root -g root -m 644 {} /var/lib/mother/{}
 	/usr/bin/install -o root -g root -m 644 Rakefile /var/lib/mother/Rakefile
-	[[ -e config.yaml ]] && /usr/bin/install -o root -g root -m 640 config.yaml /etc/mother.yaml
+	test -e config.yaml && /usr/bin/install -o root -g root -m 640 config.yaml /etc/mother.yaml
 	/usr/bin/install -o root -g root -m 750 bin/mother /usr/local/sbin/mother
 
 uninstall:

@@ -1,12 +1,9 @@
 ---
 :ha:
   :enabled: false
-  :ip: 172.16.0.10
 :nodes:
-  - :name: mother1
+  - :name: mother
     :ip: 172.16.0.1/24
-  - :name: mother2
-    :ip: 172.16.0.2/24
 :docker:
   :dns: 8.8.8.8
   :br_ip: 192.168.192.1/24
@@ -14,26 +11,33 @@
 :etcd:
   :ports: [ 4001, 7001 ]
   :volumes:
+    - ""
 :psql:
   :ports: [ 5432 ]
   :volumes:
+    - ""
 :puppetmaster:
   :ports: [ 8140 ]
   :volumes:
+    - ""
 :puppetca:
   :ports: []
   :volumes:
+    - ""
 :puppetdb:
   :ports: [ 8081, 8082 ]
   :volumes:
+    - ""
 :foreman:
   :ports: [ 80, 443 ]
   :volumes:
+    - ""
 :dns:
   :ports: [ 53 ]
   :zones: [ "fbr", "23.172.in-addr.arpa" ]
   :forwarders: [ "8.8.8.8", "8.8.4.4" ]
   :volumes:
+    - ""
 :dhcp:
   :ports: [ 67 ]
   :subnets:
@@ -44,10 +48,13 @@
     - 172.23.117.0/24
     - 172.23.118.0/24
   :volumes:
+    - ""
 :tftp:
   :ports: [ 69 ]
   :volumes:
+    - ""
 :nfs:
   :ports: [ 111, 2049 ]
   :volumes:
+    - ""
 

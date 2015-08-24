@@ -11,7 +11,7 @@ task :docker do |t|
   runcmd '( iptables-save -t nat | grep -i \\\-A | grep -i docker | sed s/-A/-D/ | xargs -L1 -I{} iptables -t nat {} ) 2>/dev/null || true'
   runcmd '( iptables-save -t filter | grep -i \\\-A | grep -i docker | sed s/-A/-D/ | xargs -L1 -I{} iptables -t filter {} ) 2>/dev/null || true'
   info t.name + ": setting DOCKER_OPTS in /etc/default/docker"
-  File.write '/etc/default/docker', "DOCKER_OPTS=\"--bip #{CONFIG[:docker][:br_ip]} --dns #{CONFIG[:docker][:dns]}\""
+  File.write '/etc/default/docker', "DOCKER_OPTS=\"--bip #{CONFIG[:docker][:br_ip]} --dns #{CONFIG[:docker][:dns]} --icc=false\""
   info t.name + ": starting Docker service"
   runcmd 'start docker'
   runcmd 'ip l s dev docker0 up'
