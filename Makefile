@@ -1,14 +1,51 @@
-all: uninstall install
+.PHONY: all build clean tag
 
-install:
-	/bin/mkdir -p /var/lib/mother/tasks /var/lib/mother/lib
-	/usr/bin/find tasks -name *.rake | /usr/bin/xargs -L1 -I{} /usr/bin/install -D -o root -g root -m 644 {} /var/lib/mother/{}
-	/usr/bin/find lib -name *.rb | /usr/bin/xargs -L1 -I{} /usr/bin/install -D -o root -g root -m 644 {} /var/lib/mother/{}
-	/usr/bin/install -o root -g root -m 644 Rakefile /var/lib/mother/Rakefile
-	test -e config.yaml && /usr/bin/install -o root -g root -m 640 config.yaml /etc/mother.yaml
-	/usr/bin/install -o root -g root -m 750 bin/mother /usr/local/sbin/mother
+TAG = 1.10.2_puppet3
+TARGET =
+DIRS = /srv/mother/cert /srv/mother/environments /srv/mother/pgdata /srv/mother/tftp /srv/mother/dhcp /srv/mother/dns /srv/mother/foreman /srv/mother/foreman/hooks
 
-uninstall:
-	/bin/rm -rf /var/lib/mother
-	/bin/rm -f /etc/mother.yaml
-	/bin/rm -f /usr/local/sbin/mother
+.PHONY: all build rebuild clean tag docker directories etcd start stop
+
+rebuild: clean build tag
+install: docker directories etcd pull start
+
+docker: /usr/bin/docker /etc/default/docker
+
+etcd: /usr/sbin/etcd
+
+
+clean: docker
+	docker-compose -f docker-compose-build.yml rm
+	-docker images | awk '/mother_/ { print $$3 }' | xargs docker rmi -f
+
+build: docker
+	docker-compose -f docker-compose-build.yml build $(TARGET)
+
+list: docker
+	docker-compose ps
+
+pull: docker
+	docker-compose pull
+
+start: docker
+	docker-compose up
+
+tag: docker
+	docker images | awk '/mother_.*?latest/ { sub(/mother_/,"",$$1); print $$3" prozeta/mother-"$$1}' | xargs -L1 -I{} docker tag {}:$(TAG)
+
+directories: $(DIRS)
+$(DIRS):
+	mkdir -p $(DIRS)
+
+/usr/bin/docker:
+	curl -sSL https://get.docker.com/ | sh
+
+/etc/default/docker:
+	stop docker
+	echo "DOCKER=/usr/bin/docker" > /etc/default/docker
+	echo "export TMPDIR=/tmp/" >> /etc/default/docker
+	echo "DOCKER_OPTS='-H unix:///var/run/docker.sock'" >> /etc/default/docker
+	start docker
+
+/usr/sbin/etcd:
+	DEBIAN_FRONTEND=noninteractive apt-get -qqy install etcd

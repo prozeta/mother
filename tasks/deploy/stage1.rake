@@ -1,3 +1,0 @@
-# etcd
-# registrator
-# logger

@@ -1,53 +1,58 @@
 ---
-:ha:
-  :enabled: false
-  :ip: 172.16.0.10
-:nodes:
-  - :name: mother1
-    :ip: 172.16.0.1/24
-  - :name: mother2
-    :ip: 172.16.0.2/24
-:docker:
-  :dns: 8.8.8.8
-  :br_ip: 192.168.192.1/24
-  :storage: /mother
-:etcd:
-  :ports: [ 4001, 7001 ]
-  :volumes:
-:psql:
-  :ports: [ 5432 ]
-  :volumes:
-:puppetmaster:
-  :ports: [ 8140 ]
-  :volumes:
-:puppetca:
-  :ports: []
-  :volumes:
-:puppetdb:
-  :ports: [ 8081, 8082 ]
-  :volumes:
-:foreman:
-  :ports: [ 80, 443 ]
-  :volumes:
-:dns:
-  :ports: [ 53 ]
-  :zones: [ "fbr", "23.172.in-addr.arpa" ]
-  :forwarders: [ "8.8.8.8", "8.8.4.4" ]
-  :volumes:
-:dhcp:
-  :ports: [ 67 ]
-  :subnets:
-    - 172.23.0.0/21
-    - 172.23.8.0/21
-    - 172.23.252.0/24
-    - 172.23.16.0/24
-    - 172.23.117.0/24
-    - 172.23.118.0/24
-  :volumes:
-:tftp:
-  :ports: [ 69 ]
-  :volumes:
-:nfs:
-  :ports: [ 111, 2049 ]
-  :volumes:
-
+auth:
+  db:
+    puppet: frxEEI6nmtN9uylievHeVzdMDQJFdkMb
+    foreman: lvS2pGSK6AdUm5KyVqGCASvC22kdMsfB
+  foreman:
+    admin: vthnOnp2NT6Rb1Z7VXaZnNmg8SqoseU8
+hostname: mother.lab.prz
+foreman:
+  hostname: foreman.lab.prz
+puppet:
+  master:
+    hostname: puppet.lab.prz
+    modules:
+      - puppetlabs-stdlib
+      - puppetlabs-concat
+      - puppetlabs-reboot
+      - puppetlabs-vcsrepo
+      - puppetlabs-firewall
+      - puppetlabs-apt
+      - puppetlabs-mysql
+      - puppetlabs-apache
+      - puppetlabs-inifile
+      - puppetlabs-lvm
+      - puppetlabs-stdlib
+      - puppetlabs-rabbitmq
+      - puppetlabs-vswitch
+      - puppetlabs-xinetd
+      - saz-memcached
+      - saz-ssh
+      - elasticsearch-logstashforwarder
+      - dalen-puppetdbquery
+      - example42-network
+      - prozeta-portauthority
+      - inkblot-ipcalc
+      - duritong-sysctl
+      - jhoblitt-ipmi
+  ca:
+    hostname: puppetca.lab.prz
+dhcp:
+  key:
+dns:
+  key:
+  forwarders:
+    - 8.8.8.8
+    - 8.8.4.4
+  forward_zones:
+    - forwarders:
+        - 172.17.0.10
+        - 172.17.1.10
+      zones:
+        - prz
+        - 172.in-addr.arpa
+    - forwarders:
+        - 10.4.0.252
+      zones:
+        - blu
+        - 0.4.10.in-addr.arpa

@@ -1,5 +1,0 @@
-# psql
-# puppetdb
-# puppetca
-# puppetmaster
-# 

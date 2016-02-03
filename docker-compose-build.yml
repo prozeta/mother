@@ -1,0 +1,16 @@
+psql:
+  build: ../mother-psql
+dns:
+  build: ../mother-dns
+dhcp:
+  build: ../mother-dhcp
+tftp:
+  build: ../mother-tftp
+puppetmaster:
+  build: ../mother-puppetmaster
+puppetdb:
+  build: ../mother-tftp
+smartproxy:
+  build: ../mother-smartproxy
+foreman:
+  build: ../mother-foreman
