@@ -31,7 +31,7 @@ start: docker
 	docker-compose up
 
 tag: docker
-	docker images | awk '/mother_.*?latest/ { sub(/mother_/,"",$$1); print $$3" prozeta/mother-"$$1}' | xargs -L1 -I{} docker tag {}:$(TAG)
+	docker images | awk '/mother_.*?latest/ { sub(/mother_/,"",$$1); print $$3" prozeta/mother-"$$1}' | xargs -L1 -IXX echo docker tag XX:$(TAG)
 
 directories: $(DIRS)
 $(DIRS):
