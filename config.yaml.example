@@ -5,7 +5,6 @@ auth:
     foreman: lvS2pGSK6AdUm5KyVqGCASvC22kdMsfB
   foreman:
     admin: vthnOnp2NT6Rb1Z7VXaZnNmg8SqoseU8
-hostname: mother.lab.prz
 foreman:
   hostname: foreman.lab.prz
 puppet:
@@ -35,23 +34,23 @@ puppet:
       - inkblot-ipcalc
       - duritong-sysctl
       - jhoblitt-ipmi
-  ca:
-    hostname: puppetca.lab.prz
 dhcp:
-  key:
+  key: test
 dns:
-  key:
+  key: test
   forwarders:
     - 8.8.8.8
     - 8.8.4.4
   forward_zones:
-    - forwarders:
+    main:
+      forwarders:
         - 172.17.0.10
         - 172.17.1.10
       zones:
         - prz
         - 172.in-addr.arpa
-    - forwarders:
+    blufor:
+      forwarders:
         - 10.4.0.252
       zones:
         - blu

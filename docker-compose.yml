@@ -1,26 +1,31 @@
 psql:
   image: prozeta/mother-psql
   env_file: env.sh
+  restart: unless-stopped
 dns:
   image: prozeta/mother-dns
   privileged: true
   net: host
   env_file: env.sh
+  restart: unless-stopped
 dhcp:
   image: prozeta/mother-dhcp
   privileged: true
   net: host
   env_file: env.sh
+  restart: unless-stopped
 tftp:
   image: prozeta/mother-tftp
   privileged: true
   net: host
   env_file: env.sh
+  restart: unless-stopped
 puppetmaster:
   image: prozeta/mother-puppetmaster
   env_file: env.sh
   ports:
     - 8140:8140
+  restart: unless-stopped
 puppetdb:
   image: prozeta/mother-puppetdb
   links:
@@ -28,6 +33,7 @@ puppetdb:
     - puppetmaster
   env_file: env.sh
   ports:
+  restart: unless-stopped
 smartproxy:
   image: prozeta/mother-smartproxy
   links:
@@ -38,6 +44,7 @@ smartproxy:
   env_file: env.sh
   ports:
     - 8443:8443
+  restart: unless-stopped
 foreman:
   image: prozeta/mother-foreman
   links:
@@ -48,3 +55,4 @@ foreman:
   ports:
     - 80:80
     - 443:443
+  restart: unless-stopped
