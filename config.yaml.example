@@ -36,21 +36,60 @@ puppet:
       - jhoblitt-ipmi
 dhcp:
   key: test
+  subnets:
+    - address: 10.248.248.0
+      range: [ 10.248.227.1 10.248.227.220 ]
+      netmask: 255.255.252.0
+      gateway: 10.248.224.10
+      domain: mgmt.lab.prz
+      ns:
+      - 10.248.224.10
+      - 172.17.0.10
+      - 172.17.1.0
+      pxe: 10.248.224.10
+    - address: 10.248.0.0
+      range: [ 10.248. 10.248. ]
+      netmask: 255.255.248.0
+      gateway: 10.248.0.1
+      domain: stack-dc1.lab.prz
+      ns:
+      - 10.248.224.10
+      - 172.17.0.10
+      - 172.17.1.0
+      pxe: 10.248.224.10
+    - address: 10.248.32.0
+      range: [ 10.248. 10.248. ]
+      netmask: 255.255.248.0
+      gateway: 10.248.32.1
+      domain: stack-dc2.lab.prz
+      ns:
+      - 10.248.224.10
+      - 172.17.0.10
+      - 172.17.1.0
+      pxe: 10.248.224.10
+    - address: 10.248.64.0
+      range: [ 10.248. 10.248. ]
+      netmask: 255.255.248.0
+      gateway: 10.248.64.1
+      domain: stack-dc3.lab.prz
+      ns:
+      - 10.248.224.10
+      - 172.17.0.10
+      - 172.17.1.0
+      pxe: 10.248.224.10
 dns:
   key: test
   forwarders:
     - 8.8.8.8
     - 8.8.4.4
   forward_zones:
-    main:
-      forwarders:
+    - forwarders:
         - 172.17.0.10
         - 172.17.1.10
       zones:
         - prz
         - 172.in-addr.arpa
-    blufor:
-      forwarders:
+    - forwarders:
         - 10.4.0.252
       zones:
         - blu

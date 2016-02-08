@@ -4,19 +4,16 @@ psql:
   restart: unless-stopped
 dns:
   image: prozeta/mother-dns
-  privileged: true
   net: host
   env_file: env.sh
   restart: unless-stopped
 dhcp:
   image: prozeta/mother-dhcp
-  privileged: true
   net: host
   env_file: env.sh
   restart: unless-stopped
 tftp:
   image: prozeta/mother-tftp
-  privileged: true
   net: host
   env_file: env.sh
   restart: unless-stopped
