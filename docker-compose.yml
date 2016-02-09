@@ -4,19 +4,21 @@ psql:
   restart: unless-stopped
 dns:
   image: prozeta/mother-dns
-  net: host
   env_file: env.sh
   restart: unless-stopped
+  ports:
+    - 53:53
+    - 53:53/udp
 dhcp:
   image: prozeta/mother-dhcp
-  net: host
   env_file: env.sh
   restart: unless-stopped
+    - 67:67/udp
 tftp:
   image: prozeta/mother-tftp
-  net: host
   env_file: env.sh
   restart: unless-stopped
+    - 69:69/udp
 puppetmaster:
   image: prozeta/mother-puppetmaster
   env_file: env.sh

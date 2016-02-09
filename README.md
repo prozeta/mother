@@ -2,15 +2,10 @@
 
 A tool that brings a virgin server into a fertile motherhood ;)
 
-## Install
+## 5-step quickstart
 
-1. ```sudo bash```
-2. ```sudo apt-get -y install make ruby ruby-ipaddress rake git```
-3. ```git clone https://github.com/prozeta/mother.git && cd mother```
-4. ```make install```
-5. ```vi /etc/mother.yaml```
-6. ```mother```
-
-## Uninstall
-
-Just run ```make uninstall``` from the root of the project source directory
+1. ```apt-get -y install make rake git```
+2. ```git clone https://github.com/prozeta/mother.git && cd mother && make prepare```
+3. ```cp example-config.yaml config.yaml && vi config.yaml```
+4. ```yaml2etcd < config.yaml```
+5. ```make start```

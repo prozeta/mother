@@ -1,6 +1,6 @@
 .PHONY: all build clean tag
 
-TAG = 1.10.2_puppet3
+TAG = 1.10.1_puppet3
 TARGET =
 DIRS = /srv/mother/cert /srv/mother/environments /srv/mother/pgdata /srv/mother/tftp /srv/mother/dhcp /srv/mother/dns /srv/mother/foreman /srv/mother/foreman/hooks
 
