@@ -1,7 +1,6 @@
 .PHONY: all build clean tag
 
 TAG = 1.10.1_puppet3
-TARGET =
 DIRS = /srv/mother/cert /srv/mother/environments /srv/mother/pgdata /srv/mother/tftp /srv/mother/dhcp /srv/mother/dns /srv/mother/foreman /srv/mother/foreman/hooks
 
 .PHONY: all build rebuild clean tag docker directories etcd start stop
@@ -15,8 +14,8 @@ etcd: /usr/sbin/etcd
 
 
 clean: docker
-	docker-compose -f docker-compose-build.yml rm
-	-docker images | awk '/mother_/ { print $$3 }' | xargs docker rmi -f
+	docker-compose -f docker-compose-build.yml rm $(TARGET)
+	-docker images | awk '/mother-[^baseimage]$(TARGET)/ { print $$3 }' | xargs docker rmi -f
 
 build: docker
 	docker-compose -f docker-compose-build.yml build $(TARGET)
@@ -25,13 +24,14 @@ list: docker
 	docker-compose ps
 
 pull: docker
-	docker-compose pull
+	docker-compose pull $(TARGET)
 
 start: docker
-	docker-compose up
+	docker-compose up $(TARGET)
 
 tag: docker
-	docker images | awk '/mother_.*?latest/ { sub(/mother_/,"",$$1); print $$3" prozeta/mother-"$$1}' | xargs -L1 -IXX echo docker tag XX:$(TAG)
+	docker images | awk '/mother_$(TARGET).*?latest/ { sub(/mother_/,"",$$1); print $$3" prozeta/mother-"$$1}' | xargs -L1 -IXX echo docker tag XX:$(TAG) | bash
+	-docker images | awk '/mother_$(TARGET)/ { print $$1 }' | xargs docker rmi
 
 directories: $(DIRS)
 $(DIRS):

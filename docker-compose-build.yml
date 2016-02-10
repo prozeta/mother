@@ -9,7 +9,7 @@ tftp:
 puppetmaster:
   build: ../mother-puppetmaster
 puppetdb:
-  build: ../mother-tftp
+  build: ../mother-puppetdb
 smartproxy:
   build: ../mother-smartproxy
 foreman:
