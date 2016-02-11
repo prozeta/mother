@@ -15,7 +15,7 @@ etcd: /usr/sbin/etcd
 
 clean: docker
 	docker-compose -f docker-compose-build.yml rm $(TARGET)
-	-docker images | awk '/mother-[^baseimage]$(TARGET)/ { print $$3 }' | xargs docker rmi -f
+	-docker images grep -v baseimage | awk '/mother-$(TARGET)/ { print $$3 }' | xargs docker rmi -f
 
 build: docker
 	docker-compose -f docker-compose-build.yml build $(TARGET)
@@ -31,6 +31,7 @@ start: docker
 
 tag: docker
 	docker images | awk '/mother_$(TARGET).*?latest/ { sub(/mother_/,"",$$1); print $$3" prozeta/mother-"$$1}' | xargs -L1 -IXX echo docker tag XX:$(TAG) | bash
+	docker images | awk '/mother_$(TARGET).*?latest/ { sub(/mother_/,"",$$1); print $$3" prozeta/mother-"$$1}' | xargs -L1 -IXX echo docker tag XX:latest | bash
 	-docker images | awk '/mother_$(TARGET)/ { print $$1 }' | xargs docker rmi
 
 directories: $(DIRS)
