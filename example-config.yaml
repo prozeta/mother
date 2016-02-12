@@ -5,38 +5,35 @@ auth:
     foreman: lvS2pGSK6AdUm5KyVqGCASvC22kdMsfB
   foreman:
     admin: vthnOnp2NT6Rb1Z7VXaZnNmg8SqoseU8
-  keys:
-    dns: pica
-    dhcp: prdel
 foreman:
   hostname: foreman.lab.prz
 puppet:
   master:
     hostname: puppet.lab.prz
     modules:
-    - puppetlabs-stdlib
-    - puppetlabs-concat
-    - puppetlabs-reboot
-    - puppetlabs-vcsrepo
-    - puppetlabs-firewall
-    - puppetlabs-apt
-    - puppetlabs-mysql
-    - puppetlabs-apache
-    - puppetlabs-inifile
-    - puppetlabs-lvm
-    - puppetlabs-stdlib
-    - puppetlabs-rabbitmq
-    - puppetlabs-vswitch
-    - puppetlabs-xinetd
-    - saz-memcached
-    - saz-ssh
-    - elasticsearch-logstashforwarder
-    - dalen-puppetdbquery
-    - example42-network
-    - prozeta-portauthority
-    - inkblot-ipcalc
-    - duritong-sysctl
-    - jhoblitt-ipmi
+    - name: puppetlabs-stdlib
+    - name: puppetlabs-concat
+    - name: puppetlabs-reboot
+    - name: puppetlabs-vcsrepo
+    - name: puppetlabs-firewall
+    - name: puppetlabs-apt
+    - name: puppetlabs-mysql
+    - name: puppetlabs-apache
+    - name: puppetlabs-inifile
+    - name: puppetlabs-lvm
+    - name: puppetlabs-stdlib
+    - name: puppetlabs-rabbitmq
+    - name: puppetlabs-vswitch
+    - name: puppetlabs-xinetd
+    - name: saz-memcached
+    - name: saz-ssh
+    - name: elasticsearch-logstashforwarder
+    - name: dalen-puppetdbquery
+    - name: example42-network
+    - name: prozeta-portauthority
+    - name: inkblot-ipcalc
+    - name: duritong-sysctl
+    - name: jhoblitt-ipmi
 dhcp:
   subnets:
   - address: 10.248.224.0

@@ -1,1 +1,1 @@
-ETCDCTL_ENDPOINT=http://mother-lab:2379
+ETCDCTL_ENDPOINT=http://localhost:2379

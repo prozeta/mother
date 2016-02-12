@@ -3,57 +3,39 @@ psql:
   image: 'prozeta/mother-psql'
   env_file: env.sh
   restart: 'unless-stopped'
+  net: host
 dns:
   image: 'prozeta/mother-dns'
   env_file: env.sh
   restart: 'unless-stopped'
-  ports:
-  - 53:53
-  - 53:53/udp
+  net: host
 dhcp:
   image: 'prozeta/mother-dhcp'
   env_file: env.sh
   restart: 'unless-stopped'
-  ports:
-  - 67:67/udp
+  net: host
 tftp:
   image: 'prozeta/mother-tftp'
   env_file: env.sh
   restart: 'unless-stopped'
-  ports:
-  - 69:69/udp
+  net: host
 puppetmaster:
   image: 'prozeta/mother-puppetmaster'
   env_file: env.sh
-  ports:
-  - 8140:8140
   restart: 'unless-stopped'
+  net: host
 puppetdb:
   image: 'prozeta/mother-puppetdb'
-  links:
-  - psql
-  - puppetmaster
   env_file: env.sh
   restart: 'unless-stopped'
+  net: host
 smartproxy:
   image: 'prozeta/mother-smartproxy'
-  links:
-  - dhcp
-  - dns
-  - tftp
-  - puppetmaster
   env_file: env.sh
-  ports:
-  - 8443:8443
   restart: 'unless-stopped'
+  net: host
 foreman:
   image: 'prozeta/mother-foreman'
-  links:
-  - smartproxy
-  - psql
-  - puppetdb
   env_file: env.sh
-  ports:
-  - 80:80
-  - 443:443
   restart: 'unless-stopped'
+  net: host
