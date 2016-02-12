@@ -71,6 +71,11 @@ dhcp:
     - 172.17.0.10
     - 172.17.1.0
 dns:
+  mail: 'support.prozeta.eu'
+  allow_query:
+  - 10.248.0.0/16
+  - 172.17.0.0/16
+  - 192.168.7.0/24
   slaves: []
   zones:
   - 'lab.prz'

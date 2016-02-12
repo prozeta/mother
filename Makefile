@@ -9,6 +9,7 @@ rebuild: clean build tag
 install: docker directories etcd pull start
 
 docker: /usr/bin/docker /etc/default/docker
+maestro: /usr/bin/pip /usr/local/bin/maestro
 
 etcd: /usr/sbin/etcd
 
@@ -40,6 +41,12 @@ $(DIRS):
 
 /usr/bin/docker:
 	curl -sSL https://get.docker.com/ | sh
+
+/usr/bin/pip:
+	DEBIAN_FRONTEND=noninteractive apt-get install -qqy python-dev python-pip python-yaml
+
+/usr/local/bin/maestro:
+	pip install --upgrade maestro-ng
 
 /etc/default/docker:
 	stop docker
