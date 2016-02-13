@@ -2,12 +2,7 @@
 
 set -e
 
-bl "setting hostname"
-sudo hostname $(etcdctl get /config/foreman/hostname)
-hostname
-bl "hostname set"
-
-bl "Configuring Foreman"
+bl "configuring Foreman"
 etcd-erb < /cfg/foreman-settings.erb > /etc/foreman/settings.yaml
 etcd-erb < /cfg/foreman-database.erb > /etc/foreman/database.yml
 bl "Foreman configured"
@@ -15,12 +10,12 @@ bl "Foreman configured"
 bl "running DB migration scripts"
 foreman-rake db:migrate
 bl "seeding default data into DB"
-foreman-rake db:seed
+SEED_ADMIN_PASSWORD="$(etcdctl get /config/auth/foreman/admin)" foreman-rake db:seed
 bl "DB updated :)"
 
-#
-# FIXME: prepare certificate
-#
+bl "building apipie cache"
+#foreman-rake apipie:cache
+bl "apipie cache generated"
 
 bl "configuring NGINX vhost"
 etcd-erb /cfg/nginx-foreman.erb > /opt/nginx/conf/foreman.conf

@@ -6,3 +6,8 @@
 :require_ssl: true
 :locations_enabled: true
 :organizations_enabled: true
+:websockets_encrypt: true
+:websockets_ssl_key: /var/lib/puppet/ssl/private_keys/<%= value '/config/puppet/master/hostname' %>.pem
+:websockets_ssl_cert: /var/lib/puppet/ssl/certs/<%= value '/config/puppet/master/hostname' %>.pem
+:ssl_client_dn_env: HTTP_X_CLIENT_DN
+:ssl_client_verify_env: HTTP_X_CLIENT_VERIFY

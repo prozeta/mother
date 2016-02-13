@@ -1,5 +1,7 @@
 #!/bin/sh
 
+sleep 2
+
 USER=puppetdb
 INSTALL_DIR=/usr/share/puppetdb
 CONFIG=/etc/puppetdb/conf.d

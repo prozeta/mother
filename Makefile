@@ -1,7 +1,7 @@
 .PHONY: all build clean tag
 
 TAG = 1.10.1_puppet3
-DIRS = /srv/mother/cert /srv/mother/environments /srv/mother/pgdata /srv/mother/tftp /srv/mother/dhcp /srv/mother/dns /srv/mother/foreman /srv/mother/foreman/hooks
+DIRS = /srv/mother/cert /srv/mother/puppet /srv/mother/psql /srv/mother/tftp /srv/mother/dhcp /srv/mother/dns /srv/mother/foreman/cache /srv/mother/foreman/hooks
 
 .PHONY: all help prepare docker directories maestro etcd config pull start stop status logs magic remove build rebuild clean tag
 
@@ -78,19 +78,19 @@ status: docker
 	docker-compose ps
 
 logs: docker
-	docker-compose logs
+	docker-compose logs $(TARGET)
 
 magic:
-	docker-compose start psql
-	docker-compose start dns
-	docker-compose start dhcp
-	docker-compose start tftp
-	docker-compose start puppetmaster
-	# sleep 10
-	# docker-compose start puppetdb
-	# docker-compose start smartproxy
+	docker-compose up -d psql
+	docker-compose up -d dns
+	docker-compose up -d dhcp
+	docker-compose up -d tftp
+	docker-compose up -d puppetmaster
+	sleep 20
+	docker-compose up -d puppetdb
+	# docker-compose up -d smartproxy
   # sleep 10
-	# docker-compose start foreman
+	docker-compose up -d foreman
 
 
 #########
@@ -101,7 +101,8 @@ remove: docker
 	docker-compose -f docker-compose-build.yml rm $(TARGET)
 
 clean: docker remove
-	-docker images | grep -v baseimage | awk '/mother-$(TARGET)/ { print $$3 }' | xargs -r docker rmi -f
+	docker images -f "dangling=true" -q | xargs -r docker rmi -f
+	docker images | grep -v baseimage | awk '/mother-$(TARGET)/ { print $$3 }' | xargs -r docker rmi -f
 
 build: docker
 	docker-compose -f docker-compose-build.yml build $(TARGET)
@@ -109,4 +110,4 @@ build: docker
 tag: docker
 	docker images | awk '/mother_$(TARGET).*?latest/ { sub(/mother_/,"",$$1); print $$3" prozeta/mother-"$$1}' | xargs -r -L1 -IXX echo docker tag XX:$(TAG) | bash
 	docker images | awk '/mother_$(TARGET).*?latest/ { sub(/mother_/,"",$$1); print $$3" prozeta/mother-"$$1}' | xargs -r -L1 -IXX echo docker tag XX:latest | bash
-	-docker images | awk '/mother_$(TARGET)/ { print $$1 }' | xargs -r docker rmi
+	docker images | awk '/mother_$(TARGET)/ { print $$1 }' | xargs -r docker rmi

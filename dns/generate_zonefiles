@@ -5,7 +5,7 @@ include EtcdTools::Etcd
 
 @hostname = `hostname -f`.chomp
 @etcd = EtcdTools::Etcd.etcd_connect ENV['ETCDCTL_ENDPOINT']
-@mail = begin @etcd.get('/config/dns/mail').value + '.' rescue 'user.domain.tld' end
+@mail = begin @etcd.get('/config/dns/mail').value rescue 'user.domain.tld' end
 @slaves = eval(@etcd.get('/config/dns/slaves').value) || []
 
 @etcd.get_hash('/config/dns')['zones'].each do |zone|

@@ -1,8 +1,8 @@
 server {
   listen 8140 ssl;
   ssl on;
-  ssl_certificate /var/lib/puppet/ssl/certs/<%= `hostname -f`.chomp %>.pem;
-  ssl_certificate_key /var/lib/puppet/ssl/private_keys/<%= `hostname -f`.chomp %>.pem;
+  ssl_certificate /var/lib/puppet/ssl/certs/<%= value '/config/puppet/master/hostname' %>.pem;
+  ssl_certificate_key /var/lib/puppet/ssl/private_keys/<%= value '/config/puppet/master/hostname' %>.pem;
   ssl_crl /var/lib/puppet/ssl/ca/ca_crl.pem;
   ssl_client_certificate /var/lib/puppet/ssl/certs/ca.pem;
   ssl_verify_client optional;
@@ -10,6 +10,6 @@ server {
   root /usr/share/puppet/public;
   passenger_enabled on;
   passenger_env_var HTTPS on;
-  passenger_env_var SSL_CLIENT_S_DN \$ssl_client_s_dn;
-  passenger_env_var SSL_CLIENT_VERIFY \$ssl_client_verify;
+  passenger_env_var SSL_CLIENT_S_DN $ssl_client_s_dn;
+  passenger_env_var SSL_CLIENT_VERIFY $ssl_client_verify;
 }

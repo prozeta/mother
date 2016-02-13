@@ -4,38 +4,60 @@ psql:
   env_file: env.sh
   restart: 'unless-stopped'
   net: host
+  volumes:
+  - /srv/mother/psql:/var/lib/postgresql
 dns:
   image: 'prozeta/mother-dns'
   env_file: env.sh
   restart: 'unless-stopped'
   net: host
+  volumes:
+  - /srv/mother/dns:/etc/bind/zones.foreman
 dhcp:
   image: 'prozeta/mother-dhcp'
   env_file: env.sh
   restart: 'unless-stopped'
   net: host
+  volumes:
+  - /srv/mother/dhcp:/var/lib/dhcp
 tftp:
   image: 'prozeta/mother-tftp'
   env_file: env.sh
   restart: 'unless-stopped'
   net: host
+  volumes:
+  - /srv/mother/tftp:/var/lib/tftpboot
 puppetmaster:
   image: 'prozeta/mother-puppetmaster'
   env_file: env.sh
   restart: 'unless-stopped'
   net: host
+  volumes:
+  - /srv/mother/cert:/var/lib/puppet/ssl
+  - /srv/mother/puppet:/etc/puppet
+  - /srv/mother/hiera:/etc/hiera
 puppetdb:
   image: 'prozeta/mother-puppetdb'
   env_file: env.sh
   restart: 'unless-stopped'
   net: host
+  volumes:
+  - /srv/mother/cert:/var/lib/puppet/ssl
 smartproxy:
   image: 'prozeta/mother-smartproxy'
   env_file: env.sh
   restart: 'unless-stopped'
   net: host
+  volumes:
+  - /srv/mother/cert:/var/lib/puppet/ssl
+  - /srv/mother/puppet:/etc/puppet
+  - /srv/mother/dhcp:/var/lib/dhcp
 foreman:
   image: 'prozeta/mother-foreman'
   env_file: env.sh
   restart: 'unless-stopped'
   net: host
+  volumes:
+  - /srv/mother/cert:/var/lib/puppet/ssl
+  - /srv/mother/puppet:/etc/puppet
+  - /srv/mother/foreman/hooks:/usr/share/foreman/config/hooks

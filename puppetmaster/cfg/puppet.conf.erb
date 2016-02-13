@@ -3,11 +3,11 @@ logdir = /var/log/puppet
 vardir = /var/lib/puppet
 ssldir = /var/lib/puppet/ssl
 rundir = /var/run/puppet
-factpath = \$vardir/lib/facter
-environmentpath = \$confdir/environments
-basemodulepath = \$confdir/modules
-privatekeydir = \$ssldir/private_keys { group = service }
-hostprivkey = \$privatekeydir/\$certname.pem { mode = 640 }
+factpath = $vardir/lib/facter
+environmentpath = $confdir/environments
+basemodulepath = $confdir/modules
+privatekeydir = $ssldir/private_keys { group = service }
+hostprivkey = $privatekeydir/$certname.pem { mode = 640 }
 reports=log,foreman,puppetdb
 
 [master]
@@ -17,6 +17,6 @@ dns_alt_names = <%= value '/config/puppet/master/hostname' %>,
 external_nodes = /etc/puppet/node.rb
 node_terminus = exec
 parser = future
-autosign = \$confdir/autosign.conf { mode = 664 }
+autosign = $confdir/autosign.conf { mode = 664 }
 storeconfigs = true
 storeconfigs_backend = puppetdb

@@ -1,0 +1,25 @@
+
+<VirtualHost *:443>
+  ServerName <%= value '/config/foreman/hostname' %>;
+  ServerAlias foreman
+  DocumentRoot /usr/share/foreman/public
+  PassengerAppRoot /usr/share/foreman
+
+  SSLEngine On
+  SSLVerifyClient optional
+  SSLOptions +StdEnvVars
+  SSLVerifyDepth 3
+
+  SSLCertificateFile  /etc/pki/foreman/foreman.foo.bar.cert
+  SSLCertificateKeyFile  /etc/pki/foreman/foreman.foo.bar.key
+  SSLCACertificateFile  /var/puppet/ssl/ca/ca_crt.pem
+
+  <Directory /usr/share/foreman/public>
+    Options FollowSymLinks
+    DirectoryIndex index.html
+    AllowOverride None
+    Order allow,deny
+    allow from all
+  </Directory>
+
+</VirtualHost>

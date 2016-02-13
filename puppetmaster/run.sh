@@ -1,2 +1,5 @@
 #!/bin/sh
-/opt/nginx/sbin/nginx 2>&1
+
+sleep 2
+
+exec /opt/nginx/sbin/nginx

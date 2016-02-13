@@ -3,3 +3,6 @@ host = 0.0.0.0
 port = 8141
 ssl-host = 0.0.0.0
 ssl-port = 8142
+ssl-cert = /var/lib/puppet/ssl/certs/<%= value '/config/puppet/master/hostname' %>.pem
+ssl-key = /var/lib/puppet/ssl/private_keys/<%= value '/config/puppet/master/hostname' %>.pem
+ssl-ca-cert = /var/lib/puppet/ssl/ca/ca_crt.pem
