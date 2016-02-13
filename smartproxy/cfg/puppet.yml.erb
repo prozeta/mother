@@ -1,0 +1,9 @@
+---
+:enabled: https
+:puppet_conf: /etc/mother/puppet/puppet.conf
+:puppet_url: https://<%= value '/config/puppet/master/hostname' %>:8140/
+:puppet_ssl_ca:
+:puppet_ssl_cert:
+:puppet_ssl_key:
+:use_cache: true
+:puppet_provider: puppetrun

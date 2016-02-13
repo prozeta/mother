@@ -1,0 +1,9 @@
+<% hash('/config/dns')['forward_zones'].each do |group| -%>
+<% group['zones'].each do |zone| -%>
+zone "<%= zone %>" {
+  type forward;
+  forward only;
+  forwarders { <%= group['forwarders'].map { |f| "#{f};" }.join(' ') %> };
+};
+<% end -%>
+<% end -%>

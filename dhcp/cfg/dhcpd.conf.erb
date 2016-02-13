@@ -1,0 +1,31 @@
+ddns-update-style interim;
+ignore client-updates;
+authoritative;
+allow booting;
+allow bootp;
+omapi-port 7911;
+omapi-key foreman_key;
+default-lease-time 43200;
+max-lease-time 86400;
+filename "/pxelinux.0";
+
+key foreman_key {
+        algorithm HMAC-MD5;
+        secret "<%= value '/config/auth/keys/dhcp' %>";
+};
+
+<% hash('/config/dhcp')['subnets'].each do |s| -%>
+subnet <%= s['address'] %> netmask <%= s['netmask'] %> {
+  option subnet-mask <%= s['netmask'] %>;
+  option routers <%= s['gateway'] %>;
+  option domain-name "<%= s['domain'] %>";
+  option domain-name-servers <%= s['ns'].join(', ') %>;
+<% if s['pxe'] -%>
+  next-server <%= s['pxe'] %>;
+<% end -%>
+<% if s['range'] -%>
+  range <%= s['range'].join(' ') %>;
+<% end -%>
+}
+
+<% end -%>

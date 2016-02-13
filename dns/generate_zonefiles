@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+require 'etcd-tools'
+require 'etcd-tools/etcd'
+include EtcdTools::Etcd
+
+@hostname = `hostname -f`.chomp
+@etcd = EtcdTools::Etcd.etcd_connect ENV['ETCDCTL_ENDPOINT']
+@mail = begin @etcd.get('/config/dns/mail').value + '.' rescue 'user.domain.tld' end
+@slaves = eval(@etcd.get('/config/dns/slaves').value) || []
+
+@etcd.get_hash('/config/dns')['zones'].each do |zone|
+  file = "/etc/bind/zones.foreman/db.#{zone}"
+  content = []
+  if File.exists? file
+    $stderr.puts "zonefile for '#{zone}' already exists, skipping"
+  else
+    content << '$ORIGIN .'
+    content << '$TTL 86400'
+    content << "#{zone} IN SOA #{@hostname}. #{@mail}. ( #{Time.now.to_i} 28800 7200 2419200 86400 )"
+    content << "\t\tNS\t#{@hostname}."
+    @slaves.each do |slave|
+      content << "\t\tNS\t#{slave}."
+    end
+    content << ''
+    File.open(file, 'w') { |f| f.puts(content) }
+    $stdout.puts "generated zonefile for '#{zone}'"
+  end
+end

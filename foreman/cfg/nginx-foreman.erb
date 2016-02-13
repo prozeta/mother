@@ -1,0 +1,35 @@
+server {
+  listen 80;
+  server_name <%= value '/config/foreman/hostname' %>;
+  root /usr/share/foreman/public;
+  passenger_enabled on;
+}
+server {
+  listen 443 ssl;
+  client_max_body_size 50M;
+  server_name <%= value '/config/foreman/hostname' %>;
+  root /usr/share/foreman/public;
+  passenger_enabled on;
+  ssl on;
+  ssl_certificate /opt/nginx/conf/ssl/<%= value '/config/foreman/hostname' %>.pem;
+  ssl_certificate_key /opt/nginx/conf/ssl/<%= value '/config/foreman/hostname' %>-Key.pem;
+  ssl_protocols SSLv2 SSLv3 TLSv1;
+  ssl_ciphers ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP;
+  ssl_prefer_server_ciphers on;
+  ssl_session_timeout 10m;
+}
+server {
+  listen 3443 ssl;
+  ssl on;
+  ssl_certificate /var/lib/puppet/ssl/certs/<%= value '/config/puppet/master/hostname' %>.pem;
+  ssl_certificate_key /var/lib/puppet/ssl/private_keys/<%= value '/config/puppet/master/hostname' %>.pem;
+  ssl_crl /var/lib/puppet/ssl/ca/ca_crl.pem;
+  ssl_client_certificate /var/lib/puppet/ssl/certs/ca.pem;
+  ssl_verify_client optional;
+  ssl_verify_depth 1;
+  root /usr/share/foreman/public;
+  passenger_enabled on;
+  passenger_env_var HTTPS on;
+  passenger_env_var SSL_CLIENT_S_DN \$ssl_client_s_dn;
+  passenger_env_var SSL_CLIENT_VERIFY \$ssl_client_verify;
+}

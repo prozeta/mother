@@ -1,0 +1,11 @@
+---
+:daemon: false
+:log_file: STDOUT
+:log_level: INFO
+:https_port: 8443
+:ssl_certificate: /etc/mother/puppet/ssl/certs/<%= value '/config/puppet/master/hostname' %>.pem
+:ssl_ca_file: /etc/mother/puppet/ssl/certs/ca.pem
+:ssl_private_key: /etc/mother/puppet/ssl/private_keys/<%= value '/config/puppet/master/hostname' %>.key
+:trusted_hosts:
+  - <%= value '/config/puppet/master/hostname' %>
+  - <%= value '/config/foreman/hostname' %>

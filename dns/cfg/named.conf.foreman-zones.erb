@@ -1,0 +1,8 @@
+<% hash('/config/dns')['zones'].each do |zone| -%>
+zone "<%= zone %>" {
+  type master;
+  file "/etc/bind/zones.foreman/db.<%= zone %>";
+  allow-update { key "rndc-key"; };
+};
+
+<% end -%>

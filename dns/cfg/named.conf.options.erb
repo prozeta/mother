@@ -1,0 +1,12 @@
+options {
+	directory "/var/cache/bind";
+	forwarders { <%= eval(value('/config/dns/forwarders')).map { |f| f + ";" }.join(' ') %> };
+	dnssec-validation auto;
+	allow-query { <%= eval(value('/config/dns/allow_query')).map { |f| f + ";" }.join(' ') rescue '0.0.0.0/0;' %> };
+	notify yes;
+	auth-nxdomain yes;
+};
+
+controls {
+      inet 127.0.0.1 allow { localhost; } keys { rndc-key; };
+};
