@@ -1,19 +1,31 @@
-
-<VirtualHost *:443>
-  ServerName <%= value '/config/foreman/hostname' %>;
+<VirtualHost *:80>
+  ServerName <%= value '/config/foreman/hostname' %>
   ServerAlias foreman
   DocumentRoot /usr/share/foreman/public
   PassengerAppRoot /usr/share/foreman
-
+  <Directory /usr/share/foreman/public>
+    Options FollowSymLinks
+    DirectoryIndex index.html
+    AllowOverride None
+    Order allow,deny
+    allow from all
+  </Directory>
+</VirtualHost>
+<VirtualHost *:443>
+  ServerName <%= value '/config/foreman/hostname' %>
+  ServerAlias foreman
+  DocumentRoot /usr/share/foreman/public
+  PassengerAppRoot /usr/share/foreman
   SSLEngine On
   SSLVerifyClient optional
   SSLOptions +StdEnvVars
   SSLVerifyDepth 3
-
-  SSLCertificateFile  /etc/pki/foreman/foreman.foo.bar.cert
-  SSLCertificateKeyFile  /etc/pki/foreman/foreman.foo.bar.key
-  SSLCACertificateFile  /var/puppet/ssl/ca/ca_crt.pem
-
+  SSLCertificateFile      "/var/lib/puppet/ssl/certs/<%= value '/config/puppet/master/hostname' %>.pem"
+  SSLCertificateKeyFile   "/var/lib/puppet/ssl/private/<%= value '/config/puppet/master/hostname' %>.pem"
+  # SSLCertificateChainFile "/var/lib/puppet/ssl/certs/ca.crt"
+  SSLCACertificatePath    "/var/lib/puppet/ssl/certs"
+  # SSLCACertificateFile    "/var/lib/puppet/ssl/certs/ca.pem"
+  SSLCARevocationFile     "/var/lib/puppet/ssl/ca/ca_crl.pem"
   <Directory /usr/share/foreman/public>
     Options FollowSymLinks
     DirectoryIndex index.html

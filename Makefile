@@ -1,30 +1,40 @@
-.PHONY: all build clean tag
-
-TAG = 1.10.1_puppet3
+-include config.mk
 DIRS = /srv/mother/cert /srv/mother/puppet /srv/mother/psql /srv/mother/tftp /srv/mother/dhcp /srv/mother/dns /srv/mother/foreman/cache /srv/mother/foreman/hooks
 
 .PHONY: all help prepare docker directories maestro etcd config pull start stop status logs magic remove build rebuild clean tag
 
 all: help
 help:
+	@echo 'Mother make-based util'
+	@echo
 	@echo 'System prepare:'
+	@echo '  make prepare        Do it all'
 	@echo '  make docker         Install Docker Engine'
 	@echo '  make etcd           Install and run ETCD locally'
 	@echo '  make maestro        Install Maestro NG'
 	@echo '  make directories    Prepare Host Directory'
-	@echo 'Service:'
-	@echo '  make config         Apply configuration from config.yaml (see example-config.yaml to get the idea)'
+	@echo
+	@echo 'Services:'
+	@echo '  make config         Apply configuration from config.yaml'
+	@echo '                      (see example-config.yaml to get the idea)'
 	@echo '  make pull           Pull the images from DockerHub'
 	@echo '  make start          Start the services! :)'
 	@echo '  make stop           Stop the services'
 	@echo '  make status         State of the services'
 	@echo '  make logs           See the log output of services'
+	@echo
 	@echo 'Development:'
-	@echo '  make rebuild'
-	@echo '  make remove'
-	@echo '  make clean'
-	@echo '  make build'
-	@echo '  make tag'
+	@echo '  make rebuild        Clean, build & tag'
+	@echo '  make remove         Remove containers'
+	@echo '  make clean          Remove images'
+	@echo '  make build          Build images'
+	@echo '  make tag            Tag images'
+	@echo
+	@echo 'Additionally, you can specify target by:'
+	@echo '  a) setting TARGET shell variable'
+	@echo '  b) using TARGET as make macro'
+	@echo
+
 
 ###########
 # PREPARE #

@@ -7,7 +7,7 @@ server {
   ssl_client_certificate /var/lib/puppet/ssl/certs/ca.pem;
   ssl_verify_client optional;
   ssl_verify_depth 1;
-  root /usr/share/puppet/public;
+  root /etc/puppet/rack/public;
   passenger_enabled on;
   passenger_env_var HTTPS on;
   passenger_env_var SSL_CLIENT_S_DN $ssl_client_s_dn;

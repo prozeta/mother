@@ -2,6 +2,13 @@
 
 set -e
 
+if [ ! -d /etc/puppet/rack/public ] || [ ! -e /etc/puppet/rack/config.ru ]; then
+  b 'bootstrapping Rack configuration...'
+  mkdir -p /etc/puppet/rack/public
+  etcd-erb < /cfg/config.ru.erb > /etc/puppet/rack/config.ru
+  bl 'done'
+fi
+
 b "configuring NGINX vhost"
 etcd-erb < /cfg/nginx.erb > /opt/nginx/conf/puppetmaster.conf
 bl 'done'
@@ -17,7 +24,7 @@ etcd-erb < /cfg/routes.yaml.erb > $(puppet master --configprint route_file)
 bl "done"
 
 bl "generating PuppetCA cert/keys"
-puppet cert list
+puppet cert list --all
 bl "PuppetCA cert/keys ready"
 
 KEY_NAME=$(etcdctl get /config/puppet/master/hostname)

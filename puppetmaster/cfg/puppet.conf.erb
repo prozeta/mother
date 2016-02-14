@@ -11,6 +11,7 @@ hostprivkey = $privatekeydir/$certname.pem { mode = 640 }
 reports=log,foreman,puppetdb
 
 [master]
+always_cache_features = true
 ssl_client_header = SSL_CLIENT_S_DN
 ssl_client_verify_header = SSL_CLIENT_VERIFY
 dns_alt_names = <%= value '/config/puppet/master/hostname' %>,

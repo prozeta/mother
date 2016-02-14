@@ -1,9 +1,8 @@
 #!/bin/bash
 
+set -e
 source /etc/mother-versions
-
 export DEBIAN_FRONTEND=noninteractive
 
-bl "installing TFTPd"
+bl "installing TFTPd..."
 apt-get -qqy install tftpd-hpa syslinux
-bl "TFTPd installed"

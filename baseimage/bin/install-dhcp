@@ -1,9 +1,8 @@
 #!/bin/bash
 
+set -e
 source /etc/mother-versions
-
 export DEBIAN_FRONTEND=noninteractive
 
-bl "installing DHCPd"
+bl "installing DHCPd..."
 apt-get -qqy install isc-dhcp-server bind9utils ipcalc
-bl "DHCPd installed"

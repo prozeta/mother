@@ -13,10 +13,10 @@ bl "seeding default data into DB"
 SEED_ADMIN_PASSWORD="$(etcdctl get /config/auth/foreman/admin)" foreman-rake db:seed
 bl "DB updated :)"
 
-bl "building apipie cache"
-#foreman-rake apipie:cache
-bl "apipie cache generated"
+# bl "building apipie cache"
+# foreman-rake apipie:cache
+# bl "apipie cache generated"
 
-bl "configuring NGINX vhost"
-etcd-erb /cfg/nginx-foreman.erb > /opt/nginx/conf/foreman.conf
+bl "configuring Apache vhost"
+etcd-erb /cfg/apache-vhost.erb > /etc/apache2/sites-available/foreman.conf
 bl "NGINX vhost configured"

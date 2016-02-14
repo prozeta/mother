@@ -2,4 +2,4 @@
 
 sleep 2
 
-exec /opt/nginx/sbin/nginx
+exec /usr/sbin/apachectl -e info -DFOREGROUD

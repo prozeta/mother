@@ -1,10 +1,10 @@
 #!/bin/bash
 
+set -e
 source /etc/mother-versions
-
 export DEBIAN_FRONTEND=noninteractive
 
-bl "installing Puppetmaster"
+bl "installing Puppetmaster..."
 apt-get -qqy install \
   puppetmaster=${PUPPET_VERSION}* \
   puppetdb-terminus \
@@ -14,19 +14,15 @@ apt-get -qqy install \
   zlib1g-dev \
   ruby-dev \
   build-essential
-bl "Puppetmaster installed"
 
-bl "installing Passenger"
+bl "installing Passenger...."
 gem install passenger --no-rdoc --no-ri
-bl "Passenger installed"
 
-bl "installing Puppet Librarian"
+bl "installing Puppet Librarian..."
 gem install librarian-puppet --no-rdoc --no-ri
-bl "Librarian installed"
 
 bl "installing NGINX (compiling, this may take a while...)"
-passenger-install-nginx-module --auto --auto-download > /tmp/nginx_install_log.txt 2>/dev/null
-bl "NGINX installed"
+passenger-install-nginx-module --auto --auto-download 2>&1 | tee /tmp/nginx_install_log.txt
 
 bl "configuring NGINX for passenger"
 PASSENGER_ROOT=`egrep 'passenger_root\ \/' /tmp/nginx_install_log.txt | awk '{ print $2 }' | sed s/\;//`
@@ -55,4 +51,3 @@ http {
 }
 " > /opt/nginx/conf/nginx.conf
 touch /opt/nginx/conf/puppetmaster.conf
-bl "NGINX configured"

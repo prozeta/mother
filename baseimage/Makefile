@@ -5,7 +5,7 @@ TAG = legacy
 
 .PHONY: all build latest enter clean
 
-all: clean build
+all: clean build latest
 
 clean:
 	-docker rmi $(NAME):$(FOREMAN_VERSION)

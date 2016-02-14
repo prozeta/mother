@@ -1,9 +1,8 @@
 #!/bin/bash
 
+set -e
 source /etc/mother-versions
-
 export DEBIAN_FRONTEND=noninteractive
 
-bl "installing BIND & tools"
+bl "installing BIND & tools..."
 apt-get -qqy install bind9 bind9utils dnsutils
-bl "BIND installed"
