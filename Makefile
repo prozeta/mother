@@ -112,7 +112,7 @@ remove: docker
 
 clean: docker remove
 	docker images -f "dangling=true" -q | xargs -r docker rmi -f
-	docker images | grep -v baseimage | awk '/mother-$(TARGET)/ { print $$3 }' | xargs -r docker rmi -f
+	-docker images | grep -v baseimage | awk '/mother-$(TARGET)/ { print $$3 }' | xargs -r docker rmi -f
 
 build: docker
 	docker-compose -f docker-compose-build.yml build $(TARGET)
