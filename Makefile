@@ -121,3 +121,6 @@ tag: docker
 	docker images | awk '/mother_$(TARGET).*?latest/ { sub(/mother_/,"",$$1); print $$3" prozeta/mother-"$$1}' | xargs -r -L1 -IXX echo docker tag XX:$(TAG) | bash
 	docker images | awk '/mother_$(TARGET).*?latest/ { sub(/mother_/,"",$$1); print $$3" prozeta/mother-"$$1}' | xargs -r -L1 -IXX echo docker tag XX:latest | bash
 	docker images | awk '/mother_$(TARGET)/ { print $$1 }' | xargs -r docker rmi
+
+push: docker
+	docker image | awk '/prozeta/mother-$(TARGET)/ { print $1:$2 }' | xargs -r docker push
