@@ -93,19 +93,6 @@ logs: docker
 enter:
 	docker exec -it mother_$(TARGET)_1 bash
 
-magic:
-	docker-compose up -d psql
-	docker-compose up -d dns
-	docker-compose up -d dhcp
-	docker-compose up -d tftp
-	docker-compose up -d puppetmaster
-	sleep 20
-	docker-compose up -d puppetdb
-	# docker-compose up -d smartproxy
-  # sleep 10
-	docker-compose up -d foreman
-
-
 #########
 # BUILD #
 #########

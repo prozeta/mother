@@ -7,21 +7,32 @@ etcd-erb < /cfg/foreman-settings.erb > /etc/foreman/settings.yaml
 etcd-erb < /cfg/foreman-database.erb > /etc/foreman/database.yml
 bl "done"
 
-bl "running DB migration scripts"
-cd /usr/share/foreman
-sudo -H -u foreman foreman-rake db:migrate
-bl "seeding default data into DB"
-sudo -H SEED_ADMIN_PASSWORD="$(etcdctl get /config/auth/foreman/admin)" -u foreman foreman-rake db:seed
-bl "DB updated :)"
+E_STATUS_PATH=/_init/foreman/db
+if [ "`etcdctl get ${E_STATUS_PATH} 2>/dev/null`" != "done" ]; then
 
-bl "building apipie cache"
-sudo -H -u foreman foreman-rake apipie:cache
-bl "apipie cache generated"
+  bl "running DB migration scripts"
+  cd /usr/share/foreman
+  sudo -H -u foreman foreman-rake db:migrate
+  bl "seeding default data into DB"
+  sudo -H SEED_ADMIN_PASSWORD="$(etcdctl get /config/auth/foreman/admin)" -u foreman foreman-rake db:seed
+  bl "DB updated :)"
 
-b "making Apache's copy of private key"
-cp /var/lib/puppet/ssl/private_keys/$(etcdctl get /config/puppet/master/hostname).pem /etc/foreman/private_key.pem
-chown foreman:foreman /etc/foreman/private_key.pem
-chmod 0400 /etc/foreman/private_key.pem
+  bl "building apipie cache"
+  sudo -H -u foreman foreman-rake apipie:cache
+  bl "apipie cache generated"
+
+  etcdctl set ${E_STATUS_PATH} done &>/dev/null
+
+fi
+
+# b "making Apache's copy of private key"
+# cp /var/lib/puppet/ssl/private_keys/$(etcdctl get /config/puppet/master/hostname).pem /etc/foreman/private_key.pem
+# chown foreman:foreman /etc/foreman/private_key.pem
+# chmod 0400 /etc/foreman/private_key.pem
+# bl 'done'
+
+b "adding foreman user to puppet group..."
+gpasswd -a foreman puppet &>/dev/null
 bl 'done'
 
 b 'generating apache2.conf...'
