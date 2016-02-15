@@ -8,14 +8,14 @@ etcd-erb < /cfg/foreman-database.erb > /etc/foreman/database.yml
 bl "done"
 
 bl "running DB migration scripts"
-foreman-rake db:migrate
+cd /usr/share/foreman
+sudo -H -u foreman foreman-rake db:migrate
 bl "seeding default data into DB"
-export SEED_ADMIN_PASSWORD="$(etcdctl get /config/auth/foreman/admin)"
-foreman-rake db:seed
+sudo -H SEED_ADMIN_PASSWORD="$(etcdctl get /config/auth/foreman/admin)" -u foreman foreman-rake db:seed
 bl "DB updated :)"
 
 bl "building apipie cache"
-foreman-rake apipie:cache
+sudo -H -u foreman foreman-rake apipie:cache
 bl "apipie cache generated"
 
 b "making Apache's copy of private key"

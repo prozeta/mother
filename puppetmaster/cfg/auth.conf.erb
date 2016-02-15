@@ -78,3 +78,4 @@ allow *
 path /
 auth any
 allow 127.0.0.1
+allow <%= `hostname -f`.chomp %>

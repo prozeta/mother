@@ -1,8 +1,8 @@
 server {
   listen 8140 ssl;
   ssl on;
-  ssl_certificate /var/lib/puppet/ssl/certs/<%= value '/config/puppet/master/hostname' %>.pem;
-  ssl_certificate_key /var/lib/puppet/ssl/private_keys/<%= value '/config/puppet/master/hostname' %>.pem;
+  ssl_certificate /var/lib/puppet/ssl/certs/<%= `hostname -f`.chomp %>.pem;
+  ssl_certificate_key /var/lib/puppet/ssl/private_keys/<%= `hostname -f`.chomp %>.pem;
   ssl_crl /var/lib/puppet/ssl/ca/ca_crl.pem;
   ssl_client_certificate /var/lib/puppet/ssl/certs/ca.pem;
   ssl_verify_client optional;

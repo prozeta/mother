@@ -27,11 +27,11 @@ bl "generating PuppetCA cert/keys"
 puppet cert list --all
 bl "PuppetCA cert/keys ready"
 
-KEY_NAME=$(etcdctl get /config/puppet/master/hostname)
+KEY_NAME=$(hostname -f)
 if [ ! -f /var/lib/puppet/ssl/certs/${KEY_NAME}.pem ]; then
-  bl "generating PuppetMaster cert/keys"
-  puppet cert generate ${KEY_NAME} --dns_alt_names $(hostname -f),$(hostname -s),$(etcdctl get /config/foreman/hostname)
-  bl "PuppetMaster cert/keys ready"
+  bl "generating usage cert/keys"
+  puppet cert generate ${KEY_NAME} --dns_alt_names $(hostname -s),$(etcdctl get /config/foreman/hostname),$(etcdctl get /config/puppet/master/hostname)
+  bl "usage cert/keys ready"
 fi
 
 bl 'Downloading defined Puppet modules'

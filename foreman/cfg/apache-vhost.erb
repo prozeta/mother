@@ -20,8 +20,8 @@
   SSLVerifyClient optional
   SSLOptions +StdEnvVars
   SSLVerifyDepth 1
-  SSLCertificateFile      "/var/lib/puppet/ssl/certs/<%= value '/config/puppet/master/hostname' %>.pem"
-  SSLCertificateKeyFile   "/var/lib/puppet/ssl/private_keys/<%= value '/config/puppet/master/hostname' %>.pem"
+  SSLCertificateFile      "/var/lib/puppet/ssl/certs/<%= value `hostname -f`.chomp %>.pem"
+  SSLCertificateKeyFile   "/var/lib/puppet/ssl/private_keys/<%= `hostname -f`.chomp %>.pem"
   # SSLCACertificatePath    "/var/lib/puppet/ssl/certs"
   SSLCACertificateFile    "/var/lib/puppet/ssl/certs/ca.pem"
   SSLCARevocationFile     "/var/lib/puppet/ssl/ca/ca_crl.pem"

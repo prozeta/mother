@@ -3,7 +3,7 @@
 :puppet_conf: /etc/puppet/puppet.conf
 :puppet_url: https://<%= value '/config/puppet/master/hostname' %>:8140/
 :puppet_ssl_ca: /var/lib/puppet/ssl/certs/ca.pem
-:puppet_ssl_cert: /var/lib/puppet/ssl/certs/<%= value '/config/puppet/master/hostname' %>.pem
-:puppet_ssl_key: /var/lib/puppet/ssl/private_keys/<%= value '/config/puppet/master/hostname' %>.pem
+:puppet_ssl_cert: /var/lib/puppet/ssl/certs/<%= `hostname -f`.chomp %>.pem
+:puppet_ssl_key: /var/lib/puppet/ssl/private_keys/<%= `hostname -f`.chomp %>.pem
 :use_cache: true
 :puppet_provider: puppetrun
