@@ -51,6 +51,7 @@ smartproxy:
   volumes:
   - /srv/mother/cert:/var/lib/puppet/ssl
   - /srv/mother/puppet:/etc/puppet
+  - /srv/mother/tftp:/tftpboot
   - /srv/mother/dhcp:/var/lib/dhcp
 foreman:
   image: 'prozeta/mother-foreman'
