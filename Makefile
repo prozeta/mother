@@ -90,6 +90,9 @@ status: docker
 logs: docker
 	docker-compose logs $(TARGET)
 
+enter:
+	docker exec -it mother_$(TARGET)_1 bash
+
 magic:
 	docker-compose up -d psql
 	docker-compose up -d dns
