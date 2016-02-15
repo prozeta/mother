@@ -123,4 +123,4 @@ tag: docker
 	docker images | awk '/mother_$(TARGET)/ { print $$1 }' | xargs -r docker rmi
 
 push: docker
-	docker image | awk '/prozeta/mother-$(TARGET)/ { print $1:$2 }' | xargs -r docker push
+	docker images | awk '/prozeta\/mother-$(TARGET)/ { OFS=":"; print($$1,$$2) }' | xargs -r -L1 docker push

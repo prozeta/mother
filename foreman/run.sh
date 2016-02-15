@@ -2,4 +2,4 @@
 
 sleep 2
 
-exec /usr/sbin/apachectl -e info -DFOREGROUD
+exec /usr/sbin/apache2ctl -e info -D FOREGROUND

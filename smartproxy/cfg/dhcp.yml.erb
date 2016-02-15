@@ -1,9 +1,9 @@
 ---
 :enabled: https
 :dhcp_vendor: isc
-:dhcp_config: /etc/mother/dhcp/dhcpd.conf
-:dhcp_leases: /etc/mother/dhcp/dhcpd.leases
-:dhcp_key_name: omapi
-:dhcp_ket_secret: <%= value '/config/auth/keys/dhcp' %>
-:dhcp_server: <%= ENV['DHCP_PORT_7911_TCP_ADDR'] %>
+:dhcp_config: /etc/dhcpd.conf
+:dhcp_leases: /var/lib/dhcp/dhcpd.leases
+:dhcp_key_name: foreman_key
+:dhcp_key_secret: <%= value '/config/auth/keys/dhcp' %>
+:dhcp_server: 127.0.0.1
 :dhcp_omapi_port: 7911

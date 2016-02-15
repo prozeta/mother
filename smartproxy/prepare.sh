@@ -3,6 +3,8 @@
 set -e
 
 b 'generating config templates...'
+etcd-erb < /cfg/dhcpd.conf.erb > /etc/dhcpd.conf
+etcd-erb < /cfg/rndc.key.erb > /etc/rndc.key
 etcd-erb < /cfg/settings.yml.erb > /etc/foreman-proxy/settings.yml
 etcd-erb < /cfg/dhcp.yml.erb > /etc/foreman-proxy/settings.d/dhcp.yml
 etcd-erb < /cfg/dns.yml.erb > /etc/foreman-proxy/settings.d/dns.yml

@@ -5,4 +5,4 @@ source /etc/mother-versions
 export DEBIAN_FRONTEND=noninteractive
 
 bl "installing Foreman Smart-proxy..."
-apt-get -qqy install foreman-proxy
+apt-get -qqy install foreman-proxy puppet bind9utils
