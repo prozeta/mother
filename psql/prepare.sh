@@ -22,10 +22,7 @@ if [ "`etcdctl get ${E_STATUS_PATH} 2>/dev/null`" != "done" ]; then
 
   bl 'setting database credentials...'
   /etc/init.d/postgresql start &>/dev/null && sleep 2
-  sudo -u postgres psql -c "CREATE USER puppet WITH PASSWORD '$(etcdctl get /config/auth/db/puppet)';"
-  sudo -u postgres psql -c "CREATE USER foreman WITH PASSWORD '$(etcdctl get /config/auth/db/foreman)';"
-  sudo -u postgres createdb -O puppet puppet
-  sudo -u postgres createdb -O foreman foreman
+  sudo -u postgres /cfg/bootstrap.sh
   /etc/init.d/postgresql stop &>/dev/null && sleep 1
   bl 'done'
 

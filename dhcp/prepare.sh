@@ -20,11 +20,5 @@ fi
 
 b 'applying configuration template...'
 etcd-erb < /cfg/dhcpd.conf.erb > /etc/dhcp/dhcpd.conf
-IP_ADDR_WITH_MASK=$(ip -4 -o a l dev eth0 | awk '{ print $4 }')
-IP_NETWORK=$(ipcalc -nb ${IP_ADDR_WITH_MASK} | awk '/Network/ { sub(/\/.*/,"",$2); print $2 }')
-IP_NETMASK=$(ipcalc -nb ${IP_ADDR_WITH_MASK} | awk '/Netmask/ { print $2 }')
-if ! grep "subnet ${IP_NETWORK} netmask ${IP_NETMASK}" /etc/dhcp/dhcpd.conf; then
-  echo "subnet ${IP_NETWORK} netmask ${IP_NETMASK} {}" >> /etc/dhcp/dhcpd.conf
-fi
 touch /var/lib/dhcp/dhcpd.leases
 bl 'done'

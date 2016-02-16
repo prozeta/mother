@@ -25,15 +25,19 @@ if [ "`etcdctl get ${E_STATUS_PATH} 2>/dev/null`" != "done" ]; then
 
 fi
 
-# b "making Apache's copy of private key"
-# cp /var/lib/puppet/ssl/private_keys/$(etcdctl get /config/puppet/master/hostname).pem /etc/foreman/private_key.pem
-# chown foreman:foreman /etc/foreman/private_key.pem
-# chmod 0400 /etc/foreman/private_key.pem
-# bl 'done'
-
-b "adding foreman user to puppet group..."
-gpasswd -a foreman puppet &>/dev/null
+b "making Apache's copy of private key"
+cp /var/lib/puppet/ssl/private_keys/$(hostname -f).pem /etc/foreman/private_key.pem
+chown foreman:foreman /etc/foreman/private_key.pem
+chmod 0400 /etc/foreman/private_key.pem
 bl 'done'
+
+# b "creating puppet group..."
+# addgroup -q --gid 106 puppet &>/dev/null
+# bl 'done'
+#
+# b "adding foreman user to puppet group..."
+# gpasswd -a foreman puppet &>/dev/null
+# bl 'done'
 
 b 'generating apache2.conf...'
 etcd-erb < /cfg/apache2.conf.erb > /etc/apache2/apache2.conf

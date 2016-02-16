@@ -9,10 +9,10 @@
 :require_ssl: true
 :locations_enabled: true
 :organizations_enabled: true
-:ssl_priv_key: /var/lib/puppet/ssl/private_keys/<%= `hostname -f`.chomp %>.pem
+:ssl_priv_key: /etc/foreman/private_key.pem
 :ssl_certificate: /var/lib/puppet/ssl/certs/<%= `hostname -f`.chomp %>.pem
 :websockets_encrypt: true
-:websockets_ssl_key: /var/lib/puppet/ssl/private_keys/<%= `hostname -f`.chomp %>.pem
+:websockets_ssl_key: /etc/foreman/private_key.pem
 :websockets_ssl_cert: /var/lib/puppet/ssl/certs/<%= `hostname -f`.chomp %>.pem
 :ssl_client_dn_env: HTTP_X_CLIENT_DN
 :ssl_client_verify_env: HTTP_X_CLIENT_VERIFY
