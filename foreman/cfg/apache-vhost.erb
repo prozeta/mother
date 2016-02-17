@@ -22,7 +22,7 @@
   SSLVerifyDepth 1
   SSLCertificateFile      "/var/lib/puppet/ssl/certs/<%= `hostname -f`.chomp %>.pem"
   SSLCertificateKeyFile   "/etc/foreman/private_key.pem"
-  # SSLCACertificatePath    "/var/lib/puppet/ssl/certs"
+  SSLCACertificatePath    "/var/lib/puppet/ssl/certs"
   SSLCACertificateFile    "/var/lib/puppet/ssl/certs/ca.pem"
   SSLCARevocationFile     "/var/lib/puppet/ssl/ca/ca_crl.pem"
   SSLCertificateChainFile "/var/lib/puppet/ssl/certs/ca.pem"

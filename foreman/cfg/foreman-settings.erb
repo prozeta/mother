@@ -14,8 +14,8 @@
 :websockets_encrypt: true
 :websockets_ssl_key: /etc/foreman/private_key.pem
 :websockets_ssl_cert: /var/lib/puppet/ssl/certs/<%= `hostname -f`.chomp %>.pem
-:ssl_client_dn_env: HTTP_X_CLIENT_DN
-:ssl_client_verify_env: HTTP_X_CLIENT_VERIFY
+:ssl_client_dn_env: SSL_CLIENT_S_DN
+:ssl_client_verify_env: SSL_CLIENT_VERIFY
 :puppetdb_enabled: true
 :puppetdb_address: https://<%= value '/config/puppet/master/hostname' %>:8142/v2/commands
 :puppetdb_dashboard_address: http://<%= value '/config/puppet/master/hostname' %>:8141/dashboard

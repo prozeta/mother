@@ -43,7 +43,7 @@ if [ "`etcdctl get ${E_STATUS_PATH} 2>/dev/null`" != "done" ]; then
 
   etcdctl set ${E_STATUS_PATH} 'done' &>/dev/null
 else
-  bl 'Puppet keys already generated'
+  bl 'Puppet certs & keys already generated'
 fi
 
 bl 'Downloading defined Puppet modules'
@@ -54,5 +54,5 @@ cd /
 bl 'Puppet modules downloaded'
 
 b 'Fixing ownership...'
-chown -R root:root $(sudo puppet config print confdir)
+chown -R puppet:puppet $(sudo puppet config print confdir)
 bl 'done'
