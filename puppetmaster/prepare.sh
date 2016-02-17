@@ -20,7 +20,12 @@ etcd-erb < /cfg/puppet.conf.erb > /etc/puppet/puppet.conf
 etcd-erb < /cfg/puppetdb.conf.erb > /etc/puppet/puppetdb.conf
 etcd-erb < /cfg/fileserver.conf.erb > /etc/puppet/fileserver.conf
 etcd-erb < /cfg/Puppetfile.erb > /etc/puppet/Puppetfile
+etcd-erb < /cfg/hiera.yaml.erb > /etc/puppet/hiera.yaml
+etcd-erb < /cfg/foreman.yaml.erb > /etc/puppet/foreman.yaml
 etcd-erb < /cfg/routes.yaml.erb > $(puppet master --configprint route_file)
+mkdir -p /etc/puppet/environments/{production,development}
+mkdir -p /etc/puppet/{hiera,files}
+cd /etc/puppet && ln -nfs /usr/lib/ruby/vendor_ruby/node.rb node.rb
 bl "done"
 
 E_STATUS_PATH=/_init/puppet/certs
@@ -49,5 +54,5 @@ cd /
 bl 'Puppet modules downloaded'
 
 b 'Fixing ownership...'
-chown -R puppet:puppet $(sudo puppet config print confdir)
+chown -R root:root $(sudo puppet config print confdir)
 bl 'done'

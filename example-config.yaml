@@ -76,6 +76,7 @@ dns:
   - 10.248.0.0/16
   - 172.17.0.0/16
   - 192.168.7.0/24
+  - 127.0.0.1/32
   slaves: []
   zones:
   - 'lab.prz'
@@ -84,18 +85,15 @@ dns:
   - 'stack-dc2.lab.prz'
   - 'stack-dc3.lab.prz'
   - '248.10.in-addr.arpa'
-  forward_zones:
-  - forwarders:
+  slave_zones:
+  - masters:
     - 172.17.0.10
-    - 172.17.1.10
     zones:
     - prz
-    - 172.in-addr.arpa
-  - forwarders:
-    - 10.4.0.252
-    zones:
-    - blu
-    - 0.4.10.in-addr.arpa
+    - cloud.prz
+    - mgmt.cloud.prz
+    - svc.cloud.prz
+    - 17.172.in-addr.arpa
   forwarders:
   - 8.8.8.8
   - 8.8.4.4

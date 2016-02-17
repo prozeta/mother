@@ -1,0 +1,10 @@
+---
+:url: "https://<%= value '/config/foreman/hostname' %>"
+:ssl_ca: "/var/lib/puppet/ssl/certs/ca.pem"
+:ssl_cert: "/var/lib/puppet/ssl/certs/<%= `hostname -f`.chomp %>.pem"
+:ssl_key: "/var/lib/puppet/ssl/private_keys/<%= `hostname -f`.chomp %>.pem"
+:puppetdir: "/var/lib/puppet"
+:puppetuser: "puppet"
+:facts: true
+:timeout: 10
+:threads: null

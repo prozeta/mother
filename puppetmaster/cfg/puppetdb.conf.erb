@@ -1,2 +1,4 @@
 [main]
-server_urls = https://127.0.0.1:8142
+server_urls = https://<%= value '/config/puppet/master/hostname' %>:8142
+server = <%= value '/config/puppet/master/hostname' %>
+port = 8142

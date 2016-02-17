@@ -24,6 +24,11 @@ gem install librarian-puppet --no-rdoc --no-ri
 bl "installing NGINX (compiling, this may take a while...)"
 passenger-install-nginx-module --auto --auto-download 2>&1 | tee /tmp/nginx_install_log.txt
 
+bl "installing Foreman reporter & ENC..."
+curl -q https://raw.githubusercontent.com/theforeman/puppet-foreman/master/files/foreman-report_v2.rb > /usr/lib/ruby/vendor_ruby/puppet/reports/foreman.rb
+curl -q https://raw.githubusercontent.com/theforeman/puppet-foreman/master/files/external_node_v2.rb > /usr/lib/ruby/vendor_ruby/node.rb
+chmod a+x /usr/lib/ruby/vendor_ruby/node.rb
+
 bl "configuring NGINX for passenger"
 PASSENGER_ROOT=`egrep 'passenger_root\ \/' /tmp/nginx_install_log.txt | awk '{ print $2 }' | sed s/\;//`
 PASSENGER_RUBY=`egrep 'passenger_ruby\ \/' /tmp/nginx_install_log.txt | awk '{ print $2 }' | sed s/\;//`

@@ -1,0 +1,9 @@
+---
+:backends:
+  - yaml
+:hierarchy:
+  - "host/%{::clientcert}"
+  - "section/%{::section}"
+  - global
+:yaml:
+  :datadir: /etc/puppet/hiera

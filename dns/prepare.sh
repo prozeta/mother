@@ -21,6 +21,7 @@ b 'generating config files...'
 etcd-erb < /cfg/named.conf.erb > /etc/bind/named.conf
 etcd-erb < /cfg/named.conf.options.erb > /etc/bind/named.conf.options
 etcd-erb < /cfg/named.conf.foreman-zones.erb > /etc/bind/named.conf.foreman-zones
+etcd-erb < /cfg/named.conf.slave-zones.erb > /etc/bind/named.conf.slave-zones
 etcd-erb < /cfg/named.conf.forward-zones.erb > /etc/bind/named.conf.forward-zones
 etcd-erb < /cfg/rndc.key.erb > /etc/bind/rndc.key
 bl 'done'
