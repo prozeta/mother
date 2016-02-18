@@ -12,4 +12,7 @@ server {
   passenger_env_var HTTPS on;
   passenger_env_var SSL_CLIENT_S_DN $ssl_client_s_dn;
   passenger_env_var SSL_CLIENT_VERIFY $ssl_client_verify;
+  passenger_env_var HTTP_X_CLIENT_DN $ssl_client_s_dn;
+  passenger_env_var HTTP_X_CLIENT_VERIFY $ssl_client_verify;
+
 }

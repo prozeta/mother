@@ -2,6 +2,8 @@
 
 sleep 2
 
+rm -f /var/run/dhcpd.pid
+
 IFACE="`etcdctl get /config/dhcp/interface 2>/dev/null`"
 [ -z $IFACE ] && IFACE=eth0
 
