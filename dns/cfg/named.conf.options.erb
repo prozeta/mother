@@ -5,6 +5,8 @@ options {
 	allow-query { <%= eval(value('/config/dns/allow_query')).map { |f| f + ";" }.join(' ') rescue '0.0.0.0/0;' %> 127.0.0.1/32; };
 	notify yes;
 	auth-nxdomain yes;
+	transfers-per-ns 50;
+	serial-query-rate 50;
 };
 
 controls {

@@ -8,13 +8,13 @@ environmentpath = $confdir/environments
 basemodulepath = $confdir/modules
 privatekeydir = $ssldir/private_keys { group = service }
 hostprivkey = $privatekeydir/$certname.pem { mode = 640 }
-certname = <%= `hostname -f`.chomp %>,
+certname = <%= `hostname -f`.chomp %>
 dns_alt_names = <%= `hostname -s`.chomp %>,<%= value '/config/puppet/master/hostname' %>,<%= value '/config/foreman/hostname' %>
 reports=log,foreman,puppetdb
 
 
 [master]
-certname = <%= `hostname -f`.chomp %>,
+certname = <%= `hostname -f`.chomp %>
 always_cache_features = true
 dns_alt_names = <%= `hostname -s`.chomp %>,<%= value '/config/puppet/master/hostname' %>,<%= value '/config/foreman/hostname' %>
 external_nodes = /etc/puppet/node.rb

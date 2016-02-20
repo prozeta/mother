@@ -2,11 +2,12 @@
 
 b 'waiting for postgres and puppet certs to init'
 while ! etcdctl get /_init/psql/create &>/dev/null || ! etcdctl get /_init/puppet/certs &>/dev/null; do
-  b .
+  echo -n .
   sleep 2
 done
-bl 'wait is over :)'
 
+echo
+bl 'starting PuppetDB'
 USER=puppetdb
 INSTALL_DIR=/usr/share/puppetdb
 CONFIG=/etc/puppetdb/conf.d

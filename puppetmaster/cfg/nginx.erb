@@ -6,13 +6,12 @@ server {
   ssl_crl /var/lib/puppet/ssl/ca/ca_crl.pem;
   ssl_client_certificate /var/lib/puppet/ssl/certs/ca.pem;
   ssl_verify_client optional;
-  ssl_verify_depth 1;
+  ssl_verify_depth 3;
+  ssl_protocols SSLv3 TLSv1;
+  ssl_ciphers SSLv3:-LOW:-EXPORT:RC4+RSA;
+  ssl_prefer_server_ciphers on;
   root /etc/puppet/rack/public;
   passenger_enabled on;
-  passenger_env_var HTTPS on;
-  passenger_env_var SSL_CLIENT_S_DN $ssl_client_s_dn;
-  passenger_env_var SSL_CLIENT_VERIFY $ssl_client_verify;
-  passenger_env_var HTTP_X_CLIENT_DN $ssl_client_s_dn;
-  passenger_env_var HTTP_X_CLIENT_VERIFY $ssl_client_verify;
-
+  passenger_set_header X-Client-DN $ssl_client_s_dn;
+  passenger_set_header X-Client-Verify $ssl_client_verify;
 }

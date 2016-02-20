@@ -2,9 +2,10 @@
 
 b 'waiting for puppet certs to init'
 while ! etcdctl get /_init/puppet/certs &>/dev/null; do
-  b .
+  echo -n .
   sleep 2
 done
-bl 'wait is over :)'
 
+echo
+bl 'starting SmartProxy'
 exec /usr/share/foreman-proxy/bin/smart-proxy
