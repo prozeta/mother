@@ -21,7 +21,7 @@ E_STATUS_PATH=/_init/psql/create
 if [ "`etcdctl get ${E_STATUS_PATH} 2>/dev/null`" != "done" ]; then
 
   bl 'setting database credentials...'
-  /etc/init.d/postgresql start &>/dev/null && sleep 2
+  /etc/init.d/postgresql start &>/dev/null && sleep 5
   sudo -u postgres /cfg/bootstrap.sh
   /etc/init.d/postgresql stop &>/dev/null && sleep 1
   bl 'done'

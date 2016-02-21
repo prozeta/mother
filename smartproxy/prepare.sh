@@ -15,5 +15,5 @@ etcd-erb < /cfg/tftp.yml.erb > /etc/foreman-proxy/settings.d/tftp.yml
 b 'done'
 
 b 'adding user foreman-proxy to the puppet group...'
-gpasswd -a foreman-proxy puppet
+gpasswd -a foreman-proxy puppet &>/dev/null
 bl 'done'

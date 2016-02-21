@@ -1,8 +1,14 @@
-<% hash('/config/dns')['slave_zones'].each do |group| -%>
-<% group['zones'].each do |zone| -%>
-zone "<%= zone %>" IN {
+<%
+if hash('/config/dns').has_key?("slave_zones") then
+  hash('/config/dns')['slave_zones'].each do |group|
+    group['zones'].each do |zone|
+-%>
+zone "<%= zone %>" {
   type slave;
   masters { <%= group['masters'].map { |f| "#{f};" }.join(' ') %> };
 };
-<% end -%>
-<% end -%>
+<%
+    end
+  end
+end
+-%>

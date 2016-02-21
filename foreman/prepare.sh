@@ -7,6 +7,13 @@ etcd-erb < /cfg/foreman-settings.erb > /etc/foreman/settings.yaml
 etcd-erb < /cfg/foreman-database.erb > /etc/foreman/database.yml
 bl "done"
 
+b 'waiting for postgres to init'
+while ! etcdctl get /_init/psql/create &>/dev/null; do
+  echo -n .
+  sleep 2
+done
+bl 'wait is over :)'
+
 E_STATUS_PATH=/_init/foreman/db
 if [ "`etcdctl get ${E_STATUS_PATH} 2>/dev/null`" != "done" ]; then
 
@@ -25,19 +32,18 @@ if [ "`etcdctl get ${E_STATUS_PATH} 2>/dev/null`" != "done" ]; then
 
 fi
 
+b 'waiting for puppet certs to init'
+while ! etcdctl get /_init/puppet/certs &>/dev/null; do
+  echo -n .
+  sleep 2
+done
+bl 'wait is over :)'
+
 b "making Apache's copy of private key"
 cp /var/lib/puppet/ssl/private_keys/$(hostname -f).pem /etc/foreman/private_key.pem
 chown foreman:foreman /etc/foreman/private_key.pem
 chmod 0400 /etc/foreman/private_key.pem
 bl 'done'
-
-# b "creating puppet group..."
-# addgroup -q --gid 106 puppet &>/dev/null
-# bl 'done'
-#
-# b "adding foreman user to puppet group..."
-# gpasswd -a foreman puppet &>/dev/null
-# bl 'done'
 
 b 'generating apache2.conf...'
 etcd-erb < /cfg/apache2.conf.erb > /etc/apache2/apache2.conf

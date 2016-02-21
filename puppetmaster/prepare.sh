@@ -48,6 +48,8 @@ fi
 
 bl 'Downloading defined Puppet modules'
 cd /etc/puppet
+rm -rf .tmp/
+rm -f Puppetfile.lock
 librarian-puppet config --rsync --global
 librarian-puppet install --verbose
 cd /
