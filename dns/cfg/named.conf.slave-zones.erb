@@ -5,6 +5,7 @@ if hash('/config/dns').has_key?("slave_zones") then
 -%>
 zone "<%= zone %>" {
   type slave;
+  file "/etc/bind/zones.slave/db.<%= zone %>";
   masters { <%= group['masters'].map { |f| "#{f};" }.join(' ') %> };
 };
 <%

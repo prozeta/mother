@@ -16,20 +16,27 @@ bl 'wait is over :)'
 
 E_STATUS_PATH=/_init/foreman/db
 if [ "`etcdctl get ${E_STATUS_PATH} 2>/dev/null`" != "done" ]; then
-
   bl "running DB migration scripts"
   cd /usr/share/foreman
   sudo -H -u foreman foreman-rake db:migrate
+  bl "DB updated :)"
+  etcdctl set ${E_STATUS_PATH} done &>/dev/null
+fi
+
+E_STATUS_PATH=/_init/foreman/seed
+if [ "`etcdctl get ${E_STATUS_PATH} 2>/dev/null`" != "done" ]; then
   bl "seeding default data into DB"
   sudo -H SEED_ADMIN_PASSWORD="$(etcdctl get /config/auth/foreman/admin)" -u foreman foreman-rake db:seed
   bl "DB updated :)"
+  etcdctl set ${E_STATUS_PATH} done &>/dev/null
+fi
 
+E_STATUS_PATH=/_init/foreman/cache
+if [ "`etcdctl get ${E_STATUS_PATH} 2>/dev/null`" != "done" ]; then
   bl "building apipie cache"
   sudo -H -u foreman foreman-rake apipie:cache
   bl "apipie cache generated"
-
   etcdctl set ${E_STATUS_PATH} done &>/dev/null
-
 fi
 
 b 'waiting for puppet certs to init'

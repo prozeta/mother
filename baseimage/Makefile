@@ -1,6 +1,6 @@
 NAME = prozeta/mother-baseimage
 PUPPET_VERSION = 3.8
-FOREMAN_VERSION = 1.10.1
+FOREMAN_VERSION = 1.10.3
 TAG = legacy
 
 .PHONY: all build latest enter clean
