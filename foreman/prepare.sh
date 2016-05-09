@@ -71,3 +71,10 @@ bl 'done'
 b "configuring Apache vhost..."
 etcd-erb < /cfg/apache-vhost.erb > /etc/apache2/sites-available/foreman.conf
 bl "done"
+
+b "configuring foreman templates..."
+su foreman -s /bin/bash -c "git config --global http.sslVerify false"
+su foreman -s /bin/bash -c "ssh-keyscan git.prz > ~/.ssh/known_hosts 2>/dev/null"
+foreman-rake templates:sync repo="https://git@git.prz/orchestration/templates.git" > /dev/null
+bl "done"
+
