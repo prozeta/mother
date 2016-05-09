@@ -21,7 +21,8 @@ apt-get install -qqy \
   ruby-foreman-docker \
   ruby-foreman-hooks \
   ruby-puppetdb-foreman \
-  python-websocket
+  python-websocket \
+  ruby-foreman-templates
 
 bl "installing Passenger..."
 cd /usr/share/foreman
