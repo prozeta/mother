@@ -7,13 +7,13 @@ chown -R postgres:postgres /var/lib/postgresql
 chmod 700 /var/lib/postgresql
 
 b 'applying configuration templates...'
-etcd-erb < /cfg/pg_hba.conf.erb > /etc/postgresql/9.3/main/pg_hba.conf
-etcd-erb < /cfg/postgresql.conf.erb > /etc/postgresql/9.3/main/postgresql.conf
+etcd-erb < /cfg/pg_hba.conf.erb > /etc/postgresql/9.4/main/pg_hba.conf
+etcd-erb < /cfg/postgresql.conf.erb > /etc/postgresql/9.4/main/postgresql.conf
 bl 'done'
 
 if [ ! -e /var/lib/postgresql/PG_VERSION ]; then
   bl 'initializing database...'
-  sudo -u postgres /usr/lib/postgresql/9.3/bin/initdb -D /var/lib/postgresql
+  sudo -u postgres /usr/lib/postgresql/9.4/bin/initdb -D /var/lib/postgresql
   bl 'done'
 fi
 

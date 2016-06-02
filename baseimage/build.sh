@@ -26,15 +26,15 @@ rm -f /tmp/${PUPPET_REL_PKG_NAME}.deb
 bl 'done'
 
 bl "installing Passenger repo...."
-sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 561F9B9CAC40B2F7
-sudo apt-get install -yyy apt-transport-https ca-certificates
+apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 561F9B9CAC40B2F7
+apt-get install -yyy apt-transport-https ca-certificates
 
 apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 561F9B9CAC40B2F7
 apt-get install -yyy apt-transport-https ca-certificates
 echo "deb https://oss-binaries.phusionpassenger.com/apt/passenger trusty main" > /etc/apt/sources.list.d/passenger.list
 
 echo "deb https://apt.postgresql.org/pub/repos/apt trusty-pgdg main" > /etc/apt/sources.list.d/pgsql.list
-wget --quiet -O - https://postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 
 b 'updating repositories...'
 apt-get -qqy update
