@@ -10,7 +10,7 @@ if [ ! -d /etc/puppet/rack/public ] || [ ! -e /etc/puppet/rack/config.ru ]; then
 fi
 
 b "configuring NGINX vhost"
-etcd-erb < /cfg/nginx.erb > /opt/nginx/conf/puppetmaster.conf
+etcd-erb < /cfg/nginx.erb > /etc/nginx/conf.d/puppetmaster.conf
 bl 'done'
 
 b "configuring PuppetMaster..."

@@ -1,7 +1,6 @@
 #!/bin/bash
 
 set -e
-
 b 'saving required versions into /etc/mother-versions...'
 echo "# generated on image build
 export PUPPET_VERSION=${PUPPET_VERSION}
@@ -20,12 +19,21 @@ fi
 b 'adding repositories...'
 echo "deb http://deb.theforeman.org/ trusty ${FV[0]}.${FV[1]}" > /etc/apt/sources.list.d/foreman.list
 echo "deb http://deb.theforeman.org/ plugins ${FV[0]}.${FV[1]}" >> /etc/apt/sources.list.d/foreman.list
-curl -q http://deb.theforeman.org/pubkey.gpg 2>/dev/null | apt-key add - >/dev/null
-curl -q https://apt.puppetlabs.com/${PUPPET_REL_PKG_NAME}.deb -o/tmp/${PUPPET_REL_PKG_NAME}.deb 2>/dev/null
-dpkg -i /tmp/${PUPPET_REL_PKG_NAME}.deb >/dev/null 2>&1
+curl http://deb.theforeman.org/pubkey.gpg | apt-key add -
+curl https://apt.puppetlabs.com/${PUPPET_REL_PKG_NAME}.deb -o/tmp/${PUPPET_REL_PKG_NAME}.deb
+dpkg -i /tmp/${PUPPET_REL_PKG_NAME}.deb
 rm -f /tmp/${PUPPET_REL_PKG_NAME}.deb
 bl 'done'
 
+bl "installing Passenger repo...."
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 561F9B9CAC40B2F7
+sudo apt-get install -yyy apt-transport-https ca-certificates
+
+# Add passenger PPA
+echo "deb https://oss-binaries.phusionpassenger.com/apt/passenger trusty main" > /etc/apt/sources.list.d/passenger.list
+
 b 'updating repositories...'
 apt-get -qqy update
+apt-get dist-upgrade -yyyy
+apt-get clean
 bl 'done'
