@@ -25,6 +25,13 @@ dpkg -i /tmp/${PUPPET_REL_PKG_NAME}.deb
 rm -f /tmp/${PUPPET_REL_PKG_NAME}.deb
 bl 'done'
 
+bl "installing Passenger repo...."
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 561F9B9CAC40B2F7
+sudo apt-get install -yyy apt-transport-https ca-certificates
+
+# Add passenger PPA
+echo "deb https://oss-binaries.phusionpassenger.com/apt/passenger trusty main" > /etc/apt/sources.list.d/passenger.list
+
 b 'updating repositories...'
 apt-get -qqy update
 apt-get dist-upgrade -yyyy
