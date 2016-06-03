@@ -5,5 +5,5 @@ source /etc/mother-versions
 export DEBIAN_FRONTEND=noninteractive
 
 bl "installing PostgreSQL..."
-apt-get -qqy install postgresql-9.4 postgresql-client-9.4
+apt-get -qqy install --no-install-recommends postgresql-9.4 postgresql-client-9.4
 
