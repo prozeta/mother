@@ -19,7 +19,6 @@ apt-get update
 apt-get install nginx-extras passenger -yyy
 
 PASSENGER_VER=$(passenger-config about version | cut -d " " -f 3)
-PASSENGER_ROOT="/usr/share/foreman/vendor/ruby/1.9.1/gems/passenger-${PASSENGER_VER}"
 PASSENGER_RUBY="/usr/bin/ruby"
 
 bl "installing Puppet Librarian..."
@@ -39,7 +38,7 @@ events {
   worker_connections 1024;
 }
 http {
-  passenger_root ${PASSENGER_ROOT};
+  passenger_root /usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini;
   passenger_ruby ${PASSENGER_RUBY};
   passenger_max_pool_size 15;
   passenger_min_instances 2;
