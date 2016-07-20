@@ -1,1 +1,1 @@
-TAG = 1.10.3_puppet3
+TAG = 1.11.2_puppet3

@@ -25,10 +25,9 @@ dpkg -i /tmp/${PUPPET_REL_PKG_NAME}.deb
 rm -f /tmp/${PUPPET_REL_PKG_NAME}.deb
 bl 'done'
 
-bl "installing Passenger repo...."
-apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 561F9B9CAC40B2F7
-apt-get install -yyy apt-transport-https ca-certificates
+#echo 'Acquire::http::Proxy "http://apt.prz:3142";' > /etc/apt/apt.conf.d/02prz-proxy
 
+bl "installing Passenger repo...."
 apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 561F9B9CAC40B2F7
 apt-get install -yyy apt-transport-https ca-certificates
 echo "deb https://oss-binaries.phusionpassenger.com/apt/passenger trusty main" > /etc/apt/sources.list.d/passenger.list
@@ -37,6 +36,8 @@ echo "deb https://apt.postgresql.org/pub/repos/apt trusty-pgdg main" > /etc/apt/
 curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 
 b 'updating repositories...'
+sed -i 's/archive.ubuntu.com/cz.archive.ubuntu.com/' /etc/apt/sources.list
+
 apt-get -qqy update
 apt-get dist-upgrade -yyyy
 apt-get clean
